@@ -8,8 +8,6 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -19,8 +17,154 @@
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@theme {
+  --font-heading: var(--font-braah-one);
+  --font-body: var(--font-bricolage);
+  --color-custom-first : #AAFFC7;
+  --color-custom-second : #67C090;
+  --color-custom-third : #215B63;
+  --color-custom-alter : #124170;
+
+}
+
+@layer base {
+  /* 2. Set default untuk seluruh body */
+  body {
+    font-family: var(--font-bricolage), ui-sans-serif, system-ui;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-braah-one);
+    @apply font-normal; /* Braah One biasanya bagus tanpa bold tambahan */
+  }
+}
+
+@layer utilities {
+  .animate-scroll {
+    display: flex;
+    width: max-content;
+    /* 30s adalah durasi, linear artinya kecepatan konstan */
+    animation: scroll-horizontal 30s linear infinite;
+  }
+
+  @keyframes scroll-horizontal {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      /* Menggeser ke kiri tepat sepertiga dari total lebar karena kita duplikasi 3x */
+      transform: translateX(calc(-33.333% - 1.33rem)); 
+    }
+  }
+}
+
+@layer components {
+  .markdown-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem; /* gap-3 */
+  }
+
+  .markdown-content p {
+    line-height: 1.625; /* leading-relaxed */
+  }
+
+  /* Memperbaiki list yang tadinya numpuk */
+  .markdown-content ol {
+    list-style-type: decimal;
+    padding-left: 1.25rem; /* pl-5 */
+    margin-top: 0.5rem; /* my-2 */
+    margin-bottom: 0.5rem;
+  }
+
+  /* Menambahkan spasi antar item list agar tidak rapat */
+  .markdown-content ol > li, 
+  .markdown-content ul > li {
+    margin-top: 0.5rem; /* space-y-2 */
+    padding-left: 0.25rem; /* pl-1 */
+  }
+
+  .markdown-content ul {
+    list-style-type: disc;
+    padding-left: 1.25rem; /* pl-5 */
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .markdown-content strong {
+    font-weight: 700; /* font-bold */
+    color: #065f46; /* text-emerald-800 */
+  }
+
+  /* Penyesuaian untuk bubble chat user (balon hijau) */
+  .chat-user .markdown-content p {
+    color: #ffffff;
+  }
+
+  .chat-user .markdown-content strong {
+    color: #ffffff;
+    text-decoration-line: underline;
+    text-decoration-color: #34d399; /* decoration-emerald-400 */
+  }
+  
+  /* Memastikan bullet & angka berwarna putih di chat user */
+  .chat-user .markdown-content ol,
+  .chat-user .markdown-content ul {
+    color: #ffffff;
+  }
+
+  .main-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    padding: 0px 16px;
+    width: 100%;
+  }
+
+  @media (min-width: 768px ) {
+    .main-container {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      gap: 16px;
+      padding: 0px 32px;
+      width: 100%;
+    }
+  }
+
+  @media (min-width: 1024px ) {
+    .main-container {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 32px;
+      padding: 0px 160px;
+      width: 100%;
+    }
+  }
+
+  .curved-bg-wrapper {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    /* Background dasar untuk bagian bawah lengkungan */
+    background-color: white; 
+  }
+
+  /* Elemen yang membuat efek lengkungan cekung */
+  .curved-bg-wrapper::before {
+    content: "";
+    position: absolute;
+    /* Menarik lingkaran ke atas agar hanya bagian bawah yang melengkung terlihat */
+    top: -150px; 
+    left: -50%;
+    width: 200%;
+    height: 350px; 
+    background: linear-gradient(to bottom, #d1fae5, #ffffff); /* emerald-100 ke white */
+    border-radius: 50%;
+    z-index: 0;
+  }
+
+  .relative-content {
+    position: relative;
+    z-index: 10;
+  }
 }
