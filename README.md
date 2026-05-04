@@ -1,53 +1,33 @@
---------------------------------------------------------------------------------
-Ray-Trashing: Empowering Circular Economy Through AI Waste Management
-   
-Ray-Trashing adalah platform inovasi berbasis website yang dirancang untuk mengubah paradigma masyarakat terhadap sampah dari material sisa menjadi sumber daya bernilai ekonomi tinggi melalui pendekatan ekonomi sirkular
-. Platform ini menjembatani celah literasi pengelolaan sampah menggunakan teknologi Artificial Intelligence (AI) dan ekosistem E-commerce yang terintegrasi
-.
-🔗 Link Akses
-Live Demo: ON PROGRESS
-Video Demo: ON PROGRESS
-🚀 Masalah & Solusi
-Indonesia menghadapi krisis sampah dengan total timbulan mencapai 38,3 juta ton pada tahun 2023, di mana 44,58% di antaranya tidak terkelola dengan baik
-. Paradigma konvensional "kumpul-angkut-buang" menyebabkan TPA mengalami kelebihan muatan (overcapacity)
-.
-Ray-Trashing hadir sebagai solusi digital dengan fitur utama:
-Chatbot Interaktif (Asisten Kreatif): Menggunakan AI untuk mengidentifikasi jenis sampah melalui foto dan memberikan panduan langkah demi langkah (step-by-step) untuk mengubahnya menjadi produk bernilai guna
-.
-Integrated E-commerce: Pasar digital khusus untuk memasarkan produk hasil daur ulang (upcycled) secara langsung, memberikan insentif ekonomi nyata bagi pengguna
-.
-Project Impact Detail: Validasi kontribusi lingkungan melalui kalkulator karbon (CO2e) dan statistik sampah yang berhasil dicegah dari TPA
-.
-🛠 Struktur Teknologi (Tech Stack)
-Pengembangan Ray-Trashing menggunakan fondasi teknologi modern untuk menjamin performa dan skalabilitas yang optimal
-:
-Core Language: Full-stack JavaScript Ecosystem
-.
-Frontend: Next.js (React Framework) untuk antarmuka yang responsif dan SEO-friendly
-.
-Backend & Database: Supabase sebagai Backend-as-a-Service (BaaS) untuk manajemen basis data, autentikasi, dan histori chat
-.
-Artificial Intelligence: Gemini API dengan model bahasa besar Gemma 27b yang telah melalui proses fine-tuning untuk respons yang akurat dan solutif
-.
-Payment Gateway: Midtrans untuk mendukung transaksi digital yang aman dalam ekosistem e-commerce
-.
-📊 Proyeksi Dampak (Impact Projection)
-Berdasarkan analisis dampak SMART, dalam satu tahun pertama implementasi, Ray-Trashing diproyeksikan memberikan hasil sebagai berikut
-:
-Lingkungan: Reduksi 20-25% sampah rumah tangga yang dibuang ke TPA
-.
-Ekonomi: Peningkatan pendapatan rumah tangga rata-rata Rp500.000 - Rp2.000.000 per bulan melalui penjualan produk upcycle
-.
-Sosial: Target 85% pengguna mampu melakukan pemilahan dan pengolahan sampah secara mandiri hingga tahap pemasaran
-.
-📦 Instalasi Lokal
-Jika Anda ingin menjalankan proyek ini di lingkungan lokal:
-Clone repositori:
-Instalasi dependensi:
-Konfigurasi .env: Siapkan kunci API untuk Supabase, Gemini, dan Midtrans.
-Jalankan aplikasi:
-👥 Tim Pengembang
-Ketua Tim: Muhammad Nadhif Aryanta (MAN 2 Kota Kediri)
-.
+# Ray-Trashing: Empowering Circular Economy Through AI Waste Management
 
---------------------------------------------------------------------------------
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Framework: Next.js](https://img.shields.io/badge/Framework-Next.js-black?logo=next.js)](https://nextjs.org/)
+[![Database: Supabase](https://img.shields.io/badge/Database-Supabase-blue?logo=supabase)](https://supabase.com/)
+[![AI: Gemma 27b](https://img.shields.io/badge/AI-Gemma_27b-orange?logo=google-gemini)](https://ai.google.dev/)
+
+**Ray-Trashing** adalah platform inovasi berbasis website yang dirancang sebagai solusi digital komprehensif untuk mengubah paradigma masyarakat terhadap sampah dari material sisa menjadi sumber daya bernilai ekonomi tinggi [1]. Melalui pendekatan ekonomi sirkular, platform ini menjembatani celah literasi pengelolaan sampah menggunakan teknologi **Artificial Intelligence (AI)** dan ekosistem **E-commerce** yang terintegrasi [1, 2].
+
+## 🔗 Link Akses
+*   **Live Demo:** onpogreess
+*   **Video Demo:** onpogreess
+
+## 🛠 Tech Structure (Tech Stack)
+Ray-Trashing dibangun menggunakan fondasi teknologi modern untuk menjamin performa dan skalabilitas optimal [3]:
+
+*   **Fondasi Bahasa:** Ekosistem **Javascript-based** secara menyeluruh [3].
+*   **Frontend Framework:** **Next.js** untuk antarmuka yang responsif, cepat, dan ramah SEO [3].
+*   **Backend & Database:** **Supabase** (Backend-as-a-Service) untuk manajemen basis data pengguna, histori chat, dan produk e-commerce [3].
+*   **Artificial Intelligence:** **Gemini API** dengan model bahasa besar **Gemma 27b** yang telah melalui proses *fine-tuning* untuk menghasilkan respons chatbot yang akurat dan solutif [3].
+*   **Payment Gateway:** **Midtrans** untuk mendukung berbagai metode transaksi digital yang aman dalam ekosistem jual-beli produk daur ulang [3, 4].
+
+## ✨ Fitur Utama
+1.  **Chatbot Interaktif (Asisten Kreatif AI):** Mampu mengidentifikasi jenis sampah melalui foto dan memberikan panduan langkah demi langkah (*step-by-step tutorial*) untuk mengolahnya menjadi produk bernilai guna [5].
+2.  **Integrated E-commerce:** Pasar digital khusus untuk memasarkan produk hasil daur ulang (*upcycled*) secara langsung, memberikan insentif ekonomi bagi pengguna [4, 6].
+3.  **Project Impact Detail:** Validasi kontribusi nyata melalui kalkulator karbon (CO2e) dan timbangan digital sampah untuk memantau emisi yang berhasil dicegah [4].
+4.  **Gamifikasi (Top Leaderboard):** Sistem peringkat dan badge pencapaian (seperti "Carbon Warrior") untuk menjaga keterlibatan pengguna [7].
+
+## 📈 Impact Projection (Target Tahun ke-1)
+Berdasarkan analisis dampak SMART, Ray-Trashing diproyeksikan memberikan hasil sebagai berikut [8]:
+*   **Lingkungan:** Penurunan 20-25% sampah rumah tangga yang dibuang ke TPA [8].
+*   **Ekonomi:** Rata-rata tambahan pendapatan Rp500.000 - Rp2.000.000/bulan bagi rumah tangga melalui penjualan produk *upcycle* [8].
+*   **Sosial:** 85% pengguna mampu menyelesaikan tutorial hingga tahap pemasaran produk [8].
