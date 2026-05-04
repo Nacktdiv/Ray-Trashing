@@ -191,25 +191,25 @@ const Dashboard = () => {
 
   return (
      
-      <div className="relative flex flex-col min-h-screen bg-slate-50 text-slate-900 pb-20">
+      <div className="relative flex flex-col min-h-screen bg-slate-50 text-custom-alter pb-20">
 
         <header className="p-6 bg-white shadow-sm rounded-b-3xl">
             <div className="flex justify-between items-center mb-4">
                 <div>
-                    <p className="text-lg text-slate-500">Selamat {timeofDay()},</p>
-                    <h1 className="text-2xl font-bold text-emerald-700">{profile?.name || "Eco Warrior"}! 👋</h1>
+                    <p className="text-lg text-custom-second">Selamat {timeofDay()},</p>
+                    <h1 className="text-2xl font-bold text-custom-alter">{profile?.name || "Eco Warrior"}! 👋</h1>
                 </div>
-                <div className="bg-emerald-100 p-2 rounded-full">
-                    <Leaf className="text-emerald-600" size={24} />
+                <div className="bg-custom-first p-2 rounded-full">
+                    <Leaf className="text-custom-second" size={24} />
                 </div>
             </div>
 
             <div className="grid grid-cols-2 gap-4">
-                <div className="bg-gradient-to-l from-teal-700 to-emerald-600 p-4 rounded-2xl text-white">
+                <div className="bg-gradient-to-l from-custom-second to-custom-third p-4 rounded-2xl text-white">
                     <p className="text-md opacity-80">Total Poin</p>
                     <p className="text-2xl font-bold">{NumberFormater(profile?.total_individual_points) || 0}</p>
                 </div>
-                <div className="bg-gradient-to-r from-teal-700 to-emerald-600 p-4 rounded-2xl text-white">
+                <div className="bg-gradient-to-r from-custom-third to-custom-second p-4 rounded-2xl text-white">
                     <p className="text-md opacity-80">CO2 Dicegah</p>
                     <p className="text-2xl font-bold">{NumberFormater(profileData.carbon_footprint)} kg</p>
                 </div>
@@ -217,20 +217,20 @@ const Dashboard = () => {
         </header>
 
         <main className="p-6 space-y-6">
-            <section className="relative overflow-hidden bg-gradient-to-br from-emerald-500 to-teal-700 p-6 rounded-3xl shadow-lg text-white">
+            <section className="relative overflow-hidden bg-gradient-to-br from-custom-second to-custom-third p-6 rounded-3xl shadow-lg text-white">
                 <div className="relative z-10">
                     <h2 className="text-xl font-bold mb-2">Punya sampah di rumah?</h2>
                     <p className="text-sm opacity-90 mb-4">Ubah sampah menjadi karya bernilai cuan dengan bantuan gemicraft!</p>
                     <Link  href={'/project'}>
                         <button 
-                        className="flex items-center gap-2 bg-white text-emerald-700 px-6 py-3 rounded-xl font-bold shadow-md active:scale-95 transition-transform"
+                        className="flex items-center gap-2 bg-white text-custom-third px-6 py-3 rounded-xl font-bold shadow-md active:scale-95 transition-transform"
                         >
                             <Hammer size={20}/>
                             Mulai atau Lanjutkan Project
                         </button>
                     </Link>
                 </div>
-                <Hammer className="absolute -right-4 -bottom-4 text-emerald-300 opacity-20" size={150} />
+                <Hammer className="absolute -right-4 -bottom-4 text-custom-first opacity-20" size={150} />
             </section>
 
                 {/* RT Leaderboard Banner */}
@@ -339,7 +339,7 @@ const Dashboard = () => {
                             <button 
                                 type="button"
                                 onClick={(e) => handleUpdateProfiles(e)}
-                                className="w-full py-4 bg-emerald-600 text-white rounded-[1.5rem] font-bold shadow-lg shadow-emerald-200 hover:bg-emerald-700 hover:scale-[1.01] transition-all flex items-center justify-center gap-3 active:scale-95"
+                                className="w-full py-4 bg-custom-third text-white rounded-[1.5rem] font-bold shadow-lg shadow-custom-third/30 hover:bg-custom-second hover:shadow-custom-second/30 hover:scale-[1.01] transition-all flex items-center justify-center gap-3 active:scale-95"
                             >
                                 <Save size={20} /> Simpan Perubahan Identitas
                             </button>

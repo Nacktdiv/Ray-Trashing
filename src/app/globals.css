@@ -141,30 +141,48 @@
     }
   }
 
-  .curved-bg-wrapper {
+  .gradation-container{
     position: relative;
-    width: 100%;
-    overflow: hidden;
-    /* Background dasar untuk bagian bawah lengkungan */
-    background-color: white; 
+    background-image: linear-gradient(to bottom, white 25% , var(--color-custom-second) 100%);
   }
 
-  /* Elemen yang membuat efek lengkungan cekung */
-  .curved-bg-wrapper::before {
+  .gradation-container::after {
     content: "";
+    inset:0;
     position: absolute;
-    /* Menarik lingkaran ke atas agar hanya bagian bawah yang melengkung terlihat */
-    top: -150px; 
-    left: -50%;
-    width: 200%;
-    height: 350px; 
-    background: linear-gradient(to bottom, #d1fae5, #ffffff); /* emerald-100 ke white */
-    border-radius: 50%;
-    z-index: 0;
+    clip-path: inset(65% 0% 0% 0% round 100% 100% 0% 0%);
+    background-color: white;
+    width: 110%;
+    height: 100%;
+    left: 50%;
+    transform: translateX(-50%);
   }
 
-  .relative-content {
+  .gradation-container-2{
     position: relative;
-    z-index: 10;
+    background-image: linear-gradient(to bottom, white 25% , var(--color-custom-first) 100%);
+  }
+
+  .gradation-container-2::after {
+    content: "";
+    inset:0;
+    position: absolute;
+    clip-path: inset(65% 0% 0% 0% round 100% 100% 0% 0%);
+    background-color: white;
+    width: 110%;
+    height: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .gradation-item {
+    position: relative;
+    z-index:10;
+    width: 100%;
+    height: 100%;
+  }
+
+  .shape-custom {
+    border-radius: 68% 32% 32% 68% / 56% 40% 60% 44%;
   }
 }

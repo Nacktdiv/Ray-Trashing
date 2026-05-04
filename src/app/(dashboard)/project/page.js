@@ -59,15 +59,15 @@ const MyProjectsPage = () => {
     <div className="relative min-h-screen bg-slate-50 pb-32 flex flex-col">
       {/* Header & Toggle */}
       <div className="bg-white px-6 pt-12 pb-6 shadow-sm sticky top-0 z-10 rounded-b-[2rem]">
-        <h1 className="text-2xl font-extrabold text-slate-800 mb-6 flex items-center gap-2">
-          <LayoutGrid className="text-emerald-600" /> Workshop Saya
+        <h1 className="text-2xl font-extrabold text-custom-alter mb-6 flex items-center gap-2">
+          <LayoutGrid className="text-custom-third" /> Workshop Saya
         </h1>
         
         <div className="flex bg-slate-100 p-1.5 rounded-2xl">
           <button 
             onClick={() => setActiveTab('Individual')}
             className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-bold transition-all ${
-              activeTab === 'Individual' ? 'bg-white text-emerald-700 shadow-sm' : 'text-slate-500'
+              activeTab === 'Individual' ? 'bg-white text-custom-third/80 shadow-sm' : 'text-slate-500'
             }`}
           >
             <User size={18} /> Individual
@@ -75,7 +75,7 @@ const MyProjectsPage = () => {
           <button 
             onClick={() => setActiveTab('Community')}
             className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-bold transition-all ${
-              activeTab === 'Community' ? 'bg-white text-blue-700 shadow-sm' : 'text-slate-500'
+              activeTab === 'Community' ? 'bg-white text-custom-alter/80 shadow-sm' : 'text-slate-500'
             }`}
           >
             <Users size={18} /> Community
@@ -99,10 +99,10 @@ const MyProjectsPage = () => {
               <div key={project.id} className="bg-white p-5 rounded-3xl border border-slate-100 shadow-sm flex flex-col gap-4">
                 <div className="space-y-2">
                     <div className="flex justify-between items-start">
-                        <span className="text-[10px] px-2 py-1 rounded-lg font-bold uppercase tracking-wider bg-emerald-50 text-emerald-600">
+                        <span className="text-[10px] px-2 py-1 rounded-lg font-bold uppercase tracking-wider bg-custom-first text-custom-third">
                             {project.difficulty}
                         </span>
-                        <div className="flex items-center gap-1 text-emerald-600 font-black text-sm">
+                        <div className="flex items-center gap-1 text-custom-alter font-black text-sm">
                             <Trophy size={14} /> {project.points_earned || project.point} pts
                         </div>
                     </div>
@@ -139,7 +139,7 @@ const MyProjectsPage = () => {
         {/* Section: Completed */}
         <section>
           <div className="flex items-center gap-2 mb-4">
-            <CheckCircle size={18} className="text-emerald-500" />
+            <CheckCircle size={18} className="text-custom-alter" />
             <h2 className="font-bold text-slate-700">Sudah Selesai</h2>
           </div>
 
@@ -147,7 +147,7 @@ const MyProjectsPage = () => {
             {currentProjects.completed.map((project) => (
               <div key={project.id} className="bg-white p-4 rounded-2xl flex items-center justify-between border border-slate-100 shadow-sm opacity-75">
                 <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 bg-emerald-50 rounded-xl flex items-center justify-center text-emerald-600">
+                  <div className="w-10 h-10 bg-custom-first rounded-xl flex items-center justify-center text-custom-third">
                     <CheckCircle size={20} />
                   </div>
                   <div>
@@ -156,7 +156,7 @@ const MyProjectsPage = () => {
                   </div>
                 </div>
                 <div className="text-right">
-                  <span className="text-sm font-black text-emerald-600">+{project.point} Pts</span>
+                  <span className="text-sm font-black text-custom-alter">+{project.point} Pts</span>
                 </div>
               </div>
             ))}
@@ -170,7 +170,7 @@ const MyProjectsPage = () => {
             onClick={() => {
               setIsScannerOpen(true)
             }} 
-            className='w-full py-4 bg-emerald-500 shadow-xl shadow-emerald-200 rounded-2xl text-lg text-white font-bold active:scale-95 transition-transform'
+            className='w-full py-4 bg-custom-third shadow-xl shadow-custom-third/30 rounded-2xl text-lg text-white font-bold active:scale-95 transition-transform'
           >
             + Buat Project Baru
           </button>

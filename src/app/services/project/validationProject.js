@@ -55,13 +55,17 @@ const ValidationProject = async (image, type, data) => {
         const fileType = type.split("/")[1]
         const fileName = `validation_${data.id}_${Date.now()}.${fileType}`;
 
+        console.log(fileName)
+
         const { data: uploadData, error: uploadError } = await supabase
             .storage
             .from('projects')
             .upload(fileName, buffer, {
-                contentType: fileType,
+                contentType: type,
                 upsert: true
             });
+
+        console.log('error 1', uploadError)
 
         if (uploadError) return { success : false, message: uploadError.message }
         
@@ -70,6 +74,7 @@ const ValidationProject = async (image, type, data) => {
             .from('projects')
             .getPublicUrl(fileName);
 
+
         const { error: updateError } = await supabase
             .from('projects')
             .update({ 
@@ -77,6 +82,8 @@ const ValidationProject = async (image, type, data) => {
                 final_image_url: publicUrl
             })
             .eq('id', data.id);
+        
+            console.log('error 2', updateError)
 
         if (updateError) return { success: false, message: updateError.message };
 

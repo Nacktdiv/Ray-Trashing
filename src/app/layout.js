@@ -1,12 +1,12 @@
 import { UserProvider } from "@/context/UserContext";
-import { Geist, Geist_Mono, Braah_One, Bricolage_Grotesque } from "next/font/google";
+import { Braah_One, Bricolage_Grotesque } from "next/font/google";
 import "./globals.css";
 
 
 const braahOne = Braah_One({
-  weight: "400", // Braah One hanya punya satu weight
   variable: "--font-braah-one",
   subsets: ["latin"],
+  weight: "400"
 });
 
 const bricolage = Bricolage_Grotesque({
@@ -21,14 +21,9 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="id" suppressHydrationWarning> 
+    <html lang="en"> 
       <body
-        className={`
-          ${braahOne.variable} 
-          ${bricolage.variable} 
-          antialiased bg-white text-slate-900
-        `}
-        suppressHydrationWarning={true}
+        className={`${braahOne.variable} ${bricolage.variable}`}
       >
         <UserProvider>
           {children} 

@@ -51,12 +51,12 @@ export function Navbar() {
           {profile ? (
             <div className="flex gap-4">
               <Link href={pathname === "/" ? "/dashboard" : "/"}>
-                  <button className="px-5 py-2 text-sm font-semibold border border-emerald-700 text-emerald-700 hover:bg-emerald-50 hover:scale-105 rounded-full transition">
+                  <button className="px-5 py-2 text-sm font-semibold bg-white border border-custom-third/50 text-emerald-700 hover:bg-emerald-50 hover:scale-105 rounded-full transition">
                     {pathname === "/" ? "Dashboard" : "Beranda"}
                   </button>
               </Link>
               
-              <button className="px-5 py-2 text-sm font-semibold border border-red-700 text-red-700 hover:bg-red-50 hover:scale-105 rounded-full transition"
+              <button className="px-5 py-2 text-sm font-semibold bg-white border border-red-700 text-red-700 hover:bg-red-100 hover:scale-105 rounded-full transition"
                       onClick={() => handleLogout()}>
                 Logout
               </button>
@@ -89,7 +89,7 @@ export function Navbar() {
               <div className="absolute top-full right-0 w-1/2 md:hidden bg-custom-second border-t border-slate-100 py-4 px-4 space-y-4 shadow-xl">
                   <div className="flex flex-col gap-3">
                       <Link href={pathname === "/" ? "/dashboard" : "/"}>
-                        <button className="w-full py-3 text-center font-semibold border border-emerald-700 text-custom-third hover:bg-custom first-70 hover:scale-105 rounded-full transition">{pathname === "/" ? "Dashboard" : "Beranda"}</button>
+                        <button className="w-full py-3 text-center font-semibold border border-emerald-700 text-custom-third hover:bg-custom-first-70 hover:scale-105 rounded-full transition">{pathname === "/" ? "Dashboard" : "Beranda"}</button>
                       </Link>
                       <button 
                         className="w-full py-3 text-center font-semibold border border-red-700 text-red-700 hover:bg-red-50 hover:scale-105 rounded-full transition"
