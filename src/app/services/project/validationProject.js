@@ -55,8 +55,6 @@ const ValidationProject = async (image, type, data) => {
         const fileType = type.split("/")[1]
         const fileName = `validation_${data.id}_${Date.now()}.${fileType}`;
 
-        console.log(fileName)
-
         const { data: uploadData, error: uploadError } = await supabase
             .storage
             .from('projects')

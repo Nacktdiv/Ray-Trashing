@@ -1,7 +1,9 @@
 import { createClient } from '../../lib/supabase'
 
-const Register = async (formData) => {
+const Register = async (formData, idRegion) => {
     const supabase = createClient()
+
+    console.log(idRegion)
 
     const { data, error } = await supabase.auth.signUp({
     email: formData.get('email'),
@@ -9,7 +11,7 @@ const Register = async (formData) => {
     options: {
         data: {
         full_name: formData.get('fullname'),
-        rt_id: formData.get('area'),
+        region_id: idRegion,
         phone_number: formData.get('phone')
         }
     }

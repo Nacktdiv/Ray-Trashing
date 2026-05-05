@@ -9,7 +9,7 @@ import { Mail, Lock, User, MapPin, ArrowRight, Github, Phone } from 'lucide-reac
 import AuthInput from '../../components/auth'
 import Login from '../../services/auth/login';
 import Register from '../../services/auth/register';
-import GetRt from '../../services/auth/getRt';
+// import GetRt from '../../services/auth/getRt';
 import GetCity from '@/app/services/auth/getcity';
 import GetDistrict from '@/app/services/auth/getdistrict';
 import useDebounce from '../../components/shared/debouncedFunction';
@@ -22,21 +22,21 @@ const AuthPage = () => {
   const [selectRegion, setSelectRegion] = useReducer((state, action) => {
     switch (action.type) {
       case 'CITY':
-        return {"city": action.id, "district": null, "rt_rw": null};
+        return {"city": action.id, "district": null, };
       case 'DISTRICT':
-        return {...state, "district": action.id, "rt_rw": null};
-      case 'RT_RW':
-        return {...state, "rt_rw": action.id};
+        return {...state, "district": action.id,};
+      // case 'RT_RW':
+      //   return {...state, "rt_rw": action.id};
     }
   }, []);
   const [dataRegion, setDataRegion] = useReducer((state, action) => {
     switch (action.type) {
       case 'CITY':
-        return {"city": action.payload, "district": null, "rt_rw": null};
+        return {"city": action.payload, "district": null,};
       case 'DISTRICT':
-        return {...state, "district": action.payload, "rt_rw": null};
-      case 'RT_RW':
-        return {...state, "rt_rw": action.payload};
+        return {...state, "district": action.payload, };
+      // case 'RT_RW':
+      //   return {...state, "rt_rw": action.payload};
       default:
         return state;
     }
@@ -73,24 +73,24 @@ const AuthPage = () => {
     fetchDataDistrict()
   }, [debouncedSearchDistrict, selectRegion.city])
 
-  useEffect(() => {
-    if (selectRegion.district == null ) return 
-    const fetchDataRt = async () => {
-      // const idCity = '35.71'
-      const res = await GetRt(selectRegion.district)
-      if (res.success){
-        setDataRegion({ type: 'RT_RW', payload: res.data });
-      } else {
-        toast.error(res.message)
-      }
-    }
+  // useEffect(() => {
+  //   if (selectRegion.district == null ) return 
+  //   const fetchDataRt = async () => {
+  //     // const idCity = '35.71'
+  //     const res = await GetRt(selectRegion.district)
+  //     if (res.success){
+  //       setDataRegion({ type: 'RT_RW', payload: res.data });
+  //     } else {
+  //       toast.error(res.message)
+  //     }
+  //   }
 
-    fetchDataRt()
-  }, [selectRegion.district])
+  //   fetchDataRt()
+  // }, [selectRegion.district])
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    const res = await Register(new FormData(e.target))
+    const res = await Register(new FormData(e.target), selectRegion.district)
     if (res.success) {
       toast.success(res.message)
       window.location.href = "/auth?mode=login"
@@ -139,7 +139,7 @@ const AuthPage = () => {
       data: dataRegion.district, 
       isAutoComplete: true 
     },
-    { name: "area", label: "RT/RW / Lokasi", type: "select", placeholder: "Pilih Lokasi Anda", icon: MapPin, data: dataRegion.rt_rw },
+    // { name: "area", label: "RT/RW / Lokasi", type: "select", placeholder: "Pilih Lokasi Anda", icon: MapPin, data: dataRegion.rt_rw },
     { name: "password", label: "Password", type: "password", placeholder: "Minimal 8 karakter", icon: Lock },
   ];
 

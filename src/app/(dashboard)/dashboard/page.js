@@ -9,7 +9,6 @@ import { NumberFormater } from '@/app/components/shared/numberFormater';
 import GetRegion from '@/app/services/dashboard/getRegion';
 import GetCity from '@/app/services/dashboard/getCity';
 import GetDistrict from '@/app/services/dashboard/getDistrict';
-import GetRt from '@/app/services/dashboard/getRt';
 import useDebounce from '@/app/components/shared/debouncedFunction';
 import UpdateProfiles from '@/app/services/dashboard/updateProfiles';
 import GetCarbonFootprint from '@/app/services/dashboard/getCarbonFootprint';
@@ -28,21 +27,21 @@ const Dashboard = () => {
     const [profileData, setProfileData] = useReducer((state, action) => {
         switch (action.type) {
             case 'INITIAL':
-                return ({...profile, ...action.data, carbon_footprint: action.dataCarbon, status_rt_rank: action.dataRank })
+                return ({...profile, ...action.data, carbon_footprint: action.dataCarbon})
             case 'UPDATE':
                 return { ...state, [action.field]: action.value };
             case 'CITY' :
-                return ({...state, kota_kab_selected: action.data, kelurahan_kecamatan_selected: null, kelurahan_kecamatan_data: null, rt_rw_data:null, rt_rw_selected: null})
+                return ({...state, kota_kab_selected: action.data, kelurahan_kecamatan_selected: null, kelurahan_kecamatan_data: null})
             case 'DISTRICT' :
-                return ({...state, kelurahan_kecamatan_selected: action.data, rt_rw_data: null, rt_rw_selected: null})
-            case 'RTRW' :
-                return ({...state, rt_rw_selected: action.data})
+                return ({...state, kelurahan_kecamatan_selected: action.data})
+            // case 'RTRW' :
+            //     return ({...state, rt_rw_selected: action.data})
             case 'CITYDATA' :
                 return ({...state, kota_kab_data: action.data})
             case 'DISTRICTDATA' :
                 return ({...state, kelurahan_kecamatan_data: action.data})
-            case 'RTRWDATA' :
-                return ({...state, rt_rw_data: action.data})
+            // case 'RTRWDATA' :
+            //     return ({...state, rt_rw_data: action.data})
             default :
                 return state
         }
@@ -81,18 +80,16 @@ const Dashboard = () => {
     useEffect(() => {
         if (editMode) return
         const fetchInitial = async () => {
-            const res = await GetRegion(profile?.rt_id)
+            const res = await GetRegion(profile?.region_id)
             const resCarbon = await GetCarbonFootprint(profile.id)
-            const resRank = await GetLeaderboard(profile.rt_id, true)
-            console.log(resRank)
-            if (res.success && resCarbon.success && resRank.success){
-                setProfileData({type: "INITIAL", data: res.data, dataCarbon: resCarbon.data, dataRank: resRank.data})
+            // const resRank = await GetLeaderboard(profile.rt_id, true)
+            if (res.success && resCarbon.success){
+                setProfileData({type: "INITIAL", data: res.data, dataCarbon: resCarbon.data})
             } else {
                 toast.error(
                     "Gagal meminta data:\n\n" +
                     "- Region: " + (res.message || "Error tidak diketahui") + "\n" +
-                    "- Carbon: " + (resCarbon.message || "Error tidak diketahui") + "\n" +
-                    "- Rank: " + (resRank.message || "Error tidak diketahui")
+                    "- Carbon: " + (resCarbon.message || "Error tidak diketahui") + "\n"
                 )
             }
         }
@@ -125,18 +122,18 @@ const Dashboard = () => {
         fetchCity()
     }, [debouncedSearchDistrict])
 
-    useEffect(() => {
-        if (!profileData?.kelurahan_kecamatan_selected?.id) return
-        const fetchCity = async () => {
-            const res = await GetRt(profileData.kelurahan_kecamatan_selected.id)
-            if (res.success){
-                setProfileData({type: "RTRWDATA", data: res.data})
-            } else {
-                toast.error('Gagal mencari data rt/rw yang sesuai',res.message)
-            }
-        }
-        fetchCity()
-    }, [profileData?.kelurahan_kecamatan_selected?.id])
+    // useEffect(() => {
+    //     if (!profileData?.kelurahan_kecamatan_selected?.id) return
+    //     const fetchCity = async () => {
+    //         const res = await GetRt(profileData.kelurahan_kecamatan_selected.id)
+    //         if (res.success){
+    //             setProfileData({type: "RTRWDATA", data: res.data})
+    //         } else {
+    //             toast.error('Gagal mencari data rt/rw yang sesuai',res.message)
+    //         }
+    //     }
+    //     fetchCity()
+    // }, [profileData?.kelurahan_kecamatan_selected?.id])
 
     const registerFields = useMemo(() => [
     { name: "name", 
@@ -172,16 +169,16 @@ const Dashboard = () => {
       selectedValue: profileData.kelurahan_kecamatan_selected,
       disabled:!profileData.kota_kab_selected?.id
     },
-    { name: "rt_rw_selected", 
-      label: "RT/RW / Lokasi", 
-      type: "select", 
-      placeholder: "Pilih Lokasi Anda", 
-      icon: MapPin, 
-      mode: 'RTRW',
-      selectedValue: profileData.rt_rw_selected,  
-      data:profileData.rt_rw_data,
-      disabled:!profileData.kelurahan_kecamatan_selected?.id
-    },
+    // { name: "rt_rw_selected", 
+    //   label: "RT/RW / Lokasi", 
+    //   type: "select", 
+    //   placeholder: "Pilih Lokasi Anda", 
+    //   icon: MapPin, 
+    //   mode: 'RTRW',
+    //   selectedValue: profileData.rt_rw_selected,  
+    //   data:profileData.rt_rw_data,
+    //   disabled:!profileData.kelurahan_kecamatan_selected?.id
+    // },
     { name: "password", 
       label: "Password", 
       type: "password", 
@@ -237,14 +234,19 @@ const Dashboard = () => {
             <section className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
                 <div className="flex justify-between items-center mb-3">
                     <h3 className="font-bold text-xl">Status Peringkat RT</h3>
-                    <span className="text-sm font-medium bg-amber-100 text-amber-700 px-2 py-1 rounded-md">Rank #{profileData?.status_rt_rank?.userRt?.rank || 0}</span>
+                    <span className="text-sm font-medium bg-amber-100 text-amber-700 px-2 py-1 rounded-md">Rank #{0}</span>
+                    {/* <span className="text-sm font-medium bg-amber-100 text-amber-700 px-2 py-1 rounded-md">Rank #{profileData?.status_rt_rank?.userRt?.rank || 0}</span> */}
                 </div>
                 <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
-                    <div 
+                    {/* <div 
                     style={{ width: `${profileData?.status_rt_rank?.percentage}%`}}
+                    className={`bg-amber-400 h-full `}></div> */}
+                    <div 
+                    style={{ width: `100%`}}
                     className={`bg-amber-400 h-full `}></div>
                 </div>
-                <p className="text-sm text-slate-500 mt-2">{NumberFormater(profileData?.status_rt_rank?.gapPoints)} poin lagi untuk naik peringkat {profileData?.status_rt_rank?.upperRt?.rank || 0}!</p>
+                {/* <p className="text-sm text-slate-500 mt-2">{NumberFormater(profileData?.status_rt_rank?.gapPoints)} poin lagi untuk naik peringkat {profileData?.status_rt_rank?.upperRt?.rank || 0}!</p> */}
+                <p className="text-sm text-slate-500 mt-2">0 poin lagi untuk naik peringkat 0!</p>
             </section>
             
             {profileData ? 
