@@ -1,7 +1,7 @@
 'use server'
 import { google } from '@ai-sdk/google';
 import { generateText } from 'ai';
-import { success, z } from 'zod'
+import { z } from 'zod'
 
 const MessageSchema = z.object({
     id: z.int(),
@@ -38,7 +38,7 @@ const GetAnswer = async (messages) => {
         ]
 
         const {text} = await generateText({
-            model: google('gemma-3-27b-it'),
+            model: google('gemma-4-31b-it'),
             system: `Anda adalah "Eco-Assistant", pakar manajemen proyek lingkungan yang cerdas dan empatis.
 
                     Tugas Utama:

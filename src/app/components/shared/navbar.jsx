@@ -13,10 +13,10 @@ export function Navbar() {
   const { profile } = useUser();
 
   const data = [
-      { name: "About", href: "#about" },
+      { name: "About", href: "#hero" },
       { name: "Features", href: "#features" },
-      { name: "Impact Projection", href: "#impact-projection" },
-      { name: "Workflow", href: "#workflow" },
+      { name: "Impact Projection", href: "#impacts" },
+      { name: "Workflow", href: "#steps" },
   ]
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);

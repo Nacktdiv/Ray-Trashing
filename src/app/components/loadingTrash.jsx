@@ -10,7 +10,7 @@ export default function LoadingTrash() {
         {[...Array(3)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute left-1/2 top-[-20px] h-3 w-3 rounded-full bg-emerald-500"
+            className="absolute left-1/2 top-[-20px] h-3 w-3 rounded-full bg-custom-second"
             initial={{ y: -20, x: -10, opacity: 0 }}
             animate={{ 
               y: 40, 
@@ -60,7 +60,7 @@ export default function LoadingTrash() {
         animate={{ opacity: 1 }}
         className="mt-6 flex flex-col items-center gap-1"
       >
-        <h2 className="text-lg font-bold text-slate-800 tracking-tight">
+        <h2 className="text-lg font-bold text-custom-alter tracking-tight">
           Memproses Data Sampah
         </h2>
         <div className="flex gap-1">
@@ -69,7 +69,7 @@ export default function LoadingTrash() {
               key={dot}
               animate={{ opacity: [0, 1, 0] }}
               transition={{ duration: 1, repeat: Infinity, delay: dot * 0.2 }}
-              className="h-1.5 w-1.5 rounded-full bg-emerald-500"
+              className="h-1.5 w-1.5 rounded-full bg-custom-second"
             />
           ))}
         </div>

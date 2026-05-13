@@ -1,14 +1,13 @@
 'use server'
 import { google } from '@ai-sdk/google';
-import { generateObject, generateText } from 'ai';
-const { z, success } = require("zod")
+import { generateText } from 'ai';
 import { createClient } from '@/app/lib/supabaseServer';
 
 const ValidationProject = async (image, type, data) => {
     const supabase = await createClient()
 
     const {text} = await generateText ({
-        model: google('gemma-3-27b-it'),
+        model: google('gemma-4-31b-it'),
         messages: [
         {
             role: 'user',

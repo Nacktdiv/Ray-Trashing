@@ -150,13 +150,13 @@ const AuthPage = () => {
       <div className="max-w-md w-full bg-white rounded-[2.5rem] shadow-xl shadow-emerald-900/5 p-8 md:p-10 border border-slate-100">
         {/* Header */}
         <div className="text-center mb-10">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-emerald-600 rounded-2xl mb-4 shadow-lg shadow-emerald-200">
-            <span className="text-white font-black text-2xl">G</span>
+          <div className="inline-flex items-center justify-center w-1/2 h-16 bg-custom-third rounded-2xl mb-4 shadow-lg shadow-custom-third/50">
+            <span className="text-white font-black text-2xl">Ray Trashing</span>
           </div>
-          <h1 className="text-2xl font-bold text-slate-800">
+          <h1 className="text-2xl font-bold text-custom-alter">
             {isLogin ? "Selamat Datang Kembali!" : "Bergabung Sekarang"}
           </h1>
-          <p className="text-slate-500 text-sm mt-2 font-medium text-balance">
+          <p className="text-custom-alter text-sm mt-2 font-medium text-balance">
             {isLogin 
               ? "Masuk untuk melanjutkan transformasi sampah jadi cuan." 
               : "Mulai langkah kecilmu untuk bumi yang lebih hijau."}
@@ -171,11 +171,11 @@ const AuthPage = () => {
 
           {isLogin && (
             <div className="flex justify-end">
-              <button className="text-xs font-bold text-emerald-600 hover:text-emerald-700">Lupa Password?</button>
+              <button className="text-xs font-bold text-custom-second hover:text-custom-third">Lupa Password?</button>
             </div>
           )}
 
-          <button className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-4 rounded-2xl shadow-lg shadow-emerald-200 flex items-center justify-center gap-2 transition-all active:scale-[0.98]">
+          <button className="w-full bg-custom-third hover:bg-custom-second text-white font-bold py-4 rounded-2xl shadow-lg shadow-custom-third/50 flex items-center justify-center gap-2 transition-all hover:shadow-custom-second/50 active:scale-[0.98]">
             {isLogin ? "Masuk ke Dashboard" : "Buat Akun Gemicraft"}
             <ArrowRight size={18} />
           </button>
@@ -201,9 +201,9 @@ const AuthPage = () => {
         </div>
 
         {/* Switch Link */}
-        <p className="text-center mt-10 text-sm text-slate-500 font-medium">
+        <p className="text-center mt-10 text-sm text-custom-alter font-medium">
           {isLogin ? "Belum punya akun?" : "Sudah punya akun?"}{" "}
-          <button className="text-emerald-600 font-bold hover:underline">
+          <button className="text-custom-second font-bold hover:underline">
             <Link href={isLogin ? "/auth?mode=register" : "/auth?mode=login"}>
               {isLogin ? "Daftar di sini" : "Login di sini"}
             </Link>

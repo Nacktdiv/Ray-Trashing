@@ -1,5 +1,5 @@
 "use client"
-import React from 'react';
+import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useUser } from '@/context/UserContext';
 import { 
@@ -8,7 +8,7 @@ import {
   ShoppingBasket,
   Mail, Instagram, Twitter, Github, ArrowUpRight, Recycle, Globe, Zap
 } from 'lucide-react';
-import { div } from 'framer-motion/client';
+import {AnimHero, AnimTech, AnimFeatures, AnimImpacts, AnimSteps} from './animation';
     
 export default function LandingPage () {
     const { profile } = useUser(); 
@@ -63,18 +63,29 @@ export default function LandingPage () {
       }
     ];
 
+    const heroRef = useRef(null);
+    const techRef = useRef(null);
+    const featuresRef = useRef(null);
+    const impactsRef = useRef(null);
+    const stepsRef = useRef(null);
+
+    AnimHero(heroRef);
+    AnimTech(techRef);
+    AnimFeatures(featuresRef);
+    AnimImpacts(impactsRef);
+    AnimSteps(stepsRef, steps);
   return (
     <>
-      <section className="relative main-container text-center inset-0 h-dvh pt-20 top-[-80]">
+      <section id='hero' ref={heroRef} className="relative main-container text-center inset-0 h-dvh pt-20 top-[-80]">
         <div className="lg:col-span-6 md:col-span-4 col-span-4 flex flex-col items-center justify-center">
-          <h1 className="text-4xl md:text-4xl lg:text-7xl font-extrabold leading-tight mb-6 bg-gradient-to-b from-custom-alter to-custom-third bg-clip-text text-transparent">
+          <h1 id='headline' className="text-4xl md:text-4xl lg:text-7xl font-extrabold leading-tight mb-6 bg-gradient-to-b from-custom-alter to-custom-third bg-clip-text text-transparent">
             Don’t Just Toss It—Transform It into Your Next Masterpiece.
           </h1>
-          <p className="text-lg lg:text-xl mb-10 max-w-2xl mx-auto">
+          <p id='subheadline' className="text-lg lg:text-xl mb-10 max-w-2xl mx-auto">
             Why let potential go to waste? Our advanced AI analyzes your household scraps to provide step-by-step upcycling blueprints tailored just for you. Once your creation is finished, list it directly on our dedicated marketplace to turn your eco-friendly hobby into a sustainable source of income.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <button className="flex items-center justify-center gap-2 px-8 py-4 bg-custom-alter text-white rounded-2xl font-bold text-lg shadow-xl shadow-custom-alter/40 hover:scale-105 transition-transform">
+              <button id='cta-button' className="flex items-center justify-center gap-2 px-8 py-4 bg-custom-alter text-white rounded-2xl font-bold text-lg shadow-xl shadow-custom-alter/40 scale-none hover:scale-105 transition-transform">
                 {profile ? (
                   <Link href="/dashboard">
                       Lihat Dashboard
@@ -88,15 +99,15 @@ export default function LandingPage () {
           </div>
         </div>
         <div className="hidden md:flex lg:col-span-6 md:col-span-4 col-span-2 items-center ustify-center">
-          <div className='shape-custom w-full aspect-square overflow-hidden'>
+          <div id='hero-image' className='shape-custom w-full aspect-square overflow-hidden'>
             <img src="./hero-image.webp" alt="Hero Image" className="w-full h-full object-cover " />
           </div>
         </div>
       </section>
 
-      <section className="gradation-container min-h-[60vh] flex flex-col justify-center overflow-hidden">
+      <section id="tech" ref={techRef} className="gradation-container min-h-[60vh] flex flex-col justify-center overflow-hidden">
         <div className='gradation-item main-container'>
-          <h2 className="col-span-4 md:col-span-8 lg:col-span-12 text-xl md:text-3xl font-bold text-center text-custom-alter mb-10">
+          <h2 id="tech-title" className="col-span-4 md:col-span-8 lg:col-span-12 text-xl md:text-3xl font-bold text-center text-custom-alter mb-10">
             Creating Innovation With Future Technologies
           </h2>
 
@@ -104,7 +115,7 @@ export default function LandingPage () {
             {tech.map((item, i) => (
               <div 
                 key={i} 
-                className="bg-white h-20 w-36 md:h-28 md:w-48 lg:h-44 lg:w-64 p-5 rounded-2xl shadow-sm border border-custom-third/50 flex items-center justify-center hover:shadow-md hover:scale-105 transition-all duration-300 "
+                className="tech-card bg-white h-20 w-36 md:h-28 md:w-48 lg:h-44 lg:w-64 p-5 rounded-2xl shadow-sm border border-custom-third/50 flex items-center justify-center hover:shadow-md hover:scale-105 hover:duration-300 hoever:transition-all "
               >
                 <img 
                   src={item.image} 
@@ -117,15 +128,15 @@ export default function LandingPage () {
         </div>
       </section>
 
-      <section className="main-container items-center md:h-dvh mt-20 md:mt-0">
+      <section id="features" ref={featuresRef} className="main-container items-center md:h-dvh mt-20 md:mt-0">
         <div className="col-span-4 md:col-span-8 lg:col-span-12 text-center">
-            <h2 className="text-2xl md:text-4xl font-bold text-custom-alter mb-20">
+            <h2 id='features-title'className="text-2xl md:text-4xl font-bold text-custom-alter mb-20">
               Integrating Cutting-Edge AI into Every Step of Creation
             </h2>
             
             <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-4 lg:gap-8 lg:px-20"> 
               {features.map((item, i) => (
-                <div key={i} className='md:col-span-4 flex justify-center'> 
+                <div key={i} className='features-card md:col-span-4 flex justify-center'> 
                   <div className='relative w-full aspect-[1/1] max-w-[400px] rounded-3xl shadow-xl bg-gradient-to-b from-custom-second/80 to-white overflow-hidden'>
                     {/* Ikon Background */}
                     <div className='absolute inset-0 flex items-center justify-center'>  
@@ -144,11 +155,11 @@ export default function LandingPage () {
         </div>
       </section>
 
-     <section id="t1" className="relative flex flex-col md:h-[100vh] bg-white overflow-hidden pt-20">
+     <section id="impacts" ref={impactsRef} className="relative flex flex-col md:h-[100vh] bg-white overflow-hidden pt-20">
         {/* 1. Gradation Container - TETAP 60dvh */}
         <div className="gradation-container-2 h-[60dvh] flex-shrink-0 overflow-hidden pt-[10vh] z-0">
           <div className='gradation-item'>
-            <h2 className="text-2xl md:text-4xl font-bold text-custom-alter text-center px-4">
+            <h2 id="impacts-title" className="text-2xl md:text-4xl font-bold text-custom-alter text-center px-4">
               Making Changes from Small Steps is the Beginning of a Real Big Impact
             </h2>
           </div>
@@ -159,7 +170,7 @@ export default function LandingPage () {
             {impacts.map((item, i) => (
               <div
                 key={i}
-                className="relative p-5 lg:p-6 rounded-[2rem] bg-white shadow-2xl border border-gray-50 hover:shadow-custom-first/20 transition-all duration-500 group w-full md:w-[48%] lg:w-[31%]"
+                className="impacts-card relative p-5 lg:p-6 rounded-[2rem] bg-white shadow-2xl border border-gray-50 hover:shadow-custom-first/20 hover:transition-all hover:duration-500 group w-full md:w-[48%] lg:w-[31%]"
               >
                 <div className="absolute top-4 right-6 text-5xl text-custom-first/5 group-hover:text-custom-first/15 transition-colors">
                   0{i + 1}
@@ -191,17 +202,18 @@ export default function LandingPage () {
       </section>
 
       <section
-        id="t2"
+        id="steps"
+        ref={stepsRef}
         className="w-full md:h-dvh flex items-center pt-20"
       >
           <div className="bg-custom-third h-[90%] w-full flex flex-col justify-center items-center py-10 md:py-10 overflow-hidden">
-            <h2 className="text-2xl md:text-4xl text-center font-bold text-white mb-10">
+            <h2 id="steps-title" className="text-2xl md:text-4xl text-center font-bold text-white mb-10">
               4 Simple steps make a treasure
             </h2>
             <div className='relative w-full h-full flex flex-col justify-center px-10 space-y-4 lg:space-y-5'>
               <div className='hidden md:block absolute inset-0 h-full w-2 left-1/2 -translate-x-1/2 bg-white/10 rounded-full border border-white/20 '/>
               {steps.map((step) => (
-                <div key={step.id} className="relative">
+                <div key={step.id} id={`steps-card-${step.id}`} className="relative">
                   <div
                     className={[
                       "flex w-full",

@@ -1,59 +1,101 @@
 import { createClient } from '@/app/lib/supabase'
-import { id } from 'zod/v4/locales'
+import { p } from 'framer-motion/client';
+import { success } from 'zod'
 
-const GetLeaderboard = async (idRt, dbMode) => {
+const GetLeaderboard = async (idRegion, mode) => {
     const supabase = createClient()
 
-    const {data: dataRt, error: errorRt} = await supabase
-    .from('rt_rw')
-    .select('region_id')
-    .eq('id', idRt)
-    .single()
-
-    if (errorRt) return {success:false, message:errorRt.message}
-
-    const {data, error} = await supabase
+   const { data: dataArea, error: errorArea } = await supabase
     .from('region')
-    .select(`*,
-            rt_rw(
-                *,
-                profiles(count)
+    .select(`
+        id,
+        nama,
+        total_accumulated_points,
+        level,
+        kecamatan: parent_id!inner (
+            id,
+            nama,
+            kotakab: parent_id!inner (
+                id,
+                nama
+            )
+        )
+    `)
+    .eq('id', idRegion) // Jika ini masih gagal, pastikan idRegion tidak undefined
+    .single();
+
+    if (errorArea) return {success: false, message: errorArea.message}
+
+    let dataRaw = []
+
+    if(mode === 'kotakab') {
+        const {data, error} = await supabase
+        .from('region')
+        .select(`*,
+                kecamatan: parent_id!inner(
+                    nama,
+                    kotakab: parent_id!inner(
+                        nama
+                        )
+                    )`
+                )
+        .eq('kecamatan.kotakab.id', dataArea.kecamatan.kotakab.id)
+        .order('total_accumulated_points', {ascending: false, nullsFirst: false})
+        .limit(10)
+        if (error) return {success: false, message: error.message}
+        dataRaw = data
+    } else if (mode === 'kecamatan') {
+        const {data, error} = await supabase
+        .from('region')
+        .select(`*,
+                kecamatan: parent_id!inner(
+                    nama,
+                    kotakab: parent_id!inner(
+                        nama
+                        )
+                    )`
+                )
+        .eq('kecamatan.id', dataArea.kecamatan.id)
+        .order('total_accumulated_points', {ascending: false, nullsFirst: false})
+        .limit(10)
+        if (error) return {success: false, message: error.message}
+        dataRaw = data
+    } else  {
+        const {data, error} = await supabase 
+        .from('profiles')
+        .select(`*,
+                kelurahan: region_id!inner(
+                    nama,
+                    kecamatan: parent_id!inner(
+                        nama,
+                        kotakab: parent_id!inner(
+                            nama
+                        )
+                    )
                 )`
             )
-    .eq('id', dataRt?.region_id)
-    .order('total_accumulated_points', {foreignTable: 'rt_rw', ascending: false})
+        .order('total_individual_points', {ascending: false, nullsFirst: false})
+        .limit(10)
+        if (error) return {success: false, message: error.message}
 
-    if (error) return {success: false, message: error.message}
+        const formattedData = data.map((item, index) => ({
+            id: item.id,
+            rank: index + 1,
+            name: `${item.name} - ${item.kelurahan.kecamatan.kotakab.nama}`,
+            points: item.total_individual_points,
+            region_id: item.region_id
+        }))
 
-    const formattedMap = data[0].rt_rw.map((item, index) => ({
+        return ({success: true, data: formattedData});
+    }
+
+    const formattedData = dataRaw.map((item, index) => ({
         id: item.id,
         rank: index + 1,
-        name: `${item.rt_number} / ${item.rw_number}`,
+        name: `${item.nama} - ${item.kecamatan.nama} - ${item.kecamatan.kotakab.nama}`,
         points: item.total_accumulated_points, 
-        members: item.profiles[0].count
+        members: item.profiles_count 
     }))
-
-    const formattedData = {
-        region: data[0].nama,
-        leaderboard: formattedMap
-    }
-
-    if (dbMode) {
-        const userRt = formattedData.leaderboard.find((item, i) =>   
-            item.id == idRt
-        )
-        const upperRt = formattedData.leaderboard.find((item, i) => 
-            item.rank == userRt.rank - 1
-        )
-        const dashboardData = {
-            userRt: userRt,
-            upperRt: upperRt,
-            gapPoints : upperRt?.points - userRt?.points || 0,
-            percentage : userRt?.points / upperRt?.points  * 100 || 100
-        }
-        
-        return ({success: true, data: dashboardData});
-    }
 
     return ({success: true, data: formattedData});
 }

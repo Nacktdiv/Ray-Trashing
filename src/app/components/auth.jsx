@@ -34,9 +34,9 @@ export default function Auth({ label, type, placeholder, icon: Icon, value, onCh
 
   return (
     <div className="space-y-2" ref={containerRef}>
-      <label className="text-sm font-semibold text-slate-700 ml-1">{label}</label>
+      <label className="text-sm font-semibold text-custom-alter ml-1">{label}</label>
       <div className="relative group">
-        <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-emerald-600 transition-colors z-10">
+        <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-custom-third transition-colors z-10">
           {Icon && <Icon size={18} />}
         </div>
 
@@ -45,7 +45,7 @@ export default function Auth({ label, type, placeholder, icon: Icon, value, onCh
             name={name}
             value={value}
             onChange={onChange}
-            className="w-full pl-12 pr-10 py-3 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all text-sm appearance-none cursor-pointer"
+            className="w-full pl-12 pr-10 py-3 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-custom-second/60 focus:border-custom-second transition-all text-sm appearance-none cursor-pointer"
           >
             <option value="" disabled>{placeholder}</option>
             {data?.map((item) => (
@@ -66,16 +66,16 @@ export default function Auth({ label, type, placeholder, icon: Icon, value, onCh
               }}
               placeholder={placeholder}
               autoComplete="off"
-              className="w-full pl-12 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all text-sm"
+              className="w-full pl-12 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-custom-second/60 focus:border-custom-second transition-all text-sm"
             />
 
             {isAutoComplete && showSuggestions && data?.length > 0 && (
-              <ul className="absolute left-0 right-0 mt-2 bg-white border border-slate-200 rounded-xl shadow-xl z-50 max-h-60 overflow-y-auto py-2 animate-in fade-in zoom-in-95 duration-200">
+              <ul className="absolute left-0 right-0 mt-2 bg-white border border-custom-second rounded-xl shadow-xl z-50 max-h-60 overflow-y-auto py-2 animate-in fade-in zoom-in-95 duration-200">
                 {data.map((item) => (
                   <li 
                     key={item.id} 
                     onClick={() => handleItemClick(item)} 
-                    className="px-4 py-2 text-sm text-slate-600 hover:bg-emerald-50 hover:text-emerald-700 cursor-pointer transition-colors border-b border-slate-50 last:border-none"
+                    className="px-4 py-2 text-sm text-slate-600 hover:bg-custom-second hover:text-custom-alter cursor-pointer transition-colors border-b border-slate-50 last:border-none"
                   >
                     {item.nama_lengkap || item.nama}
                   </li>

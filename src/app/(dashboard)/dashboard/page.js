@@ -19,9 +19,9 @@ const Dashboard = () => {
 
     const timeofDay = () => {
         const hour = new Date().getHours()
-        if (hour < 12) return "pagi";
-        else if (hour < 18) return "siang";
-        else return "malam";
+        if (hour < 12) return "morning";
+        else if (hour < 18) return "afternoon";
+        else return "evening";
     }
 
     const [profileData, setProfileData] = useReducer((state, action) => {
@@ -137,21 +137,21 @@ const Dashboard = () => {
 
     const registerFields = useMemo(() => [
     { name: "name", 
-      label: "Nama Lengkap", 
+      label: "Full Name", 
       type: "text", 
       placeholder: "Budi Santoso", 
       icon: User, 
       selectedValue:profileData.name },
     { name: "phone_number", 
-      label: "Nomor WhatsApp", 
+      label: "WhatsApp Number", 
       type: "tel", 
       placeholder: "0812xxxx", 
       icon: Phone, 
       selectedValue:profileData.phone_number  },
     { name: "kota_kab", 
-      label: "Kota/Kabupaten", 
+      label: "City/Regency", 
       type: "text", 
-      placeholder: "Cari Lokasi Anda", 
+      placeholder: "Search Your Location", 
       icon: MapPin,  
       mode: "CITY" ,
       data : profileData?.kota_kab_data, 
@@ -161,7 +161,7 @@ const Dashboard = () => {
     { name: "kelurahan_kecamatan", 
       label: "Kelurahan-Kecamatan", 
       type: "text", 
-      placeholder: "Cari Lokasi Anda", 
+      placeholder: "Search Your Location", 
       icon: MapPin, 
       mode: 'DISTRICT',
       data: profileData.kelurahan_kecamatan_data,
@@ -193,7 +193,7 @@ const Dashboard = () => {
         <header className="p-6 bg-white shadow-sm rounded-b-3xl">
             <div className="flex justify-between items-center mb-4">
                 <div>
-                    <p className="text-lg text-custom-second">Selamat {timeofDay()},</p>
+                    <p className="text-lg text-custom-second">Good {timeofDay()},</p>
                     <h1 className="text-2xl font-bold text-custom-alter">{profile?.name || "Eco Warrior"}! 👋</h1>
                 </div>
                 <div className="bg-custom-first p-2 rounded-full">
@@ -203,11 +203,11 @@ const Dashboard = () => {
 
             <div className="grid grid-cols-2 gap-4">
                 <div className="bg-gradient-to-l from-custom-second to-custom-third p-4 rounded-2xl text-white">
-                    <p className="text-md opacity-80">Total Poin</p>
+                    <p className="text-md opacity-80">Total Points</p>
                     <p className="text-2xl font-bold">{NumberFormater(profile?.total_individual_points) || 0}</p>
                 </div>
                 <div className="bg-gradient-to-r from-custom-third to-custom-second p-4 rounded-2xl text-white">
-                    <p className="text-md opacity-80">CO2 Dicegah</p>
+                    <p className="text-md opacity-80">CO2 Saved</p>
                     <p className="text-2xl font-bold">{NumberFormater(profileData.carbon_footprint)} kg</p>
                 </div>
             </div>
@@ -216,37 +216,18 @@ const Dashboard = () => {
         <main className="p-6 space-y-6">
             <section className="relative overflow-hidden bg-gradient-to-br from-custom-second to-custom-third p-6 rounded-3xl shadow-lg text-white">
                 <div className="relative z-10">
-                    <h2 className="text-xl font-bold mb-2">Punya sampah di rumah?</h2>
-                    <p className="text-sm opacity-90 mb-4">Ubah sampah menjadi karya bernilai cuan dengan bantuan gemicraft!</p>
+                    <h2 className="text-xl font-bold mb-2">Do you have waste at home?</h2>
+                    <p className="text-sm opacity-90 mb-4">Turn waste into valuable crafts with the help of Ray Trashing!</p>
                     <Link  href={'/project'}>
                         <button 
                         className="flex items-center gap-2 bg-white text-custom-third px-6 py-3 rounded-xl font-bold shadow-md active:scale-95 transition-transform"
                         >
                             <Hammer size={20}/>
-                            Mulai atau Lanjutkan Project
+                            Start or Continue Project
                         </button>
                     </Link>
                 </div>
                 <Hammer className="absolute -right-4 -bottom-4 text-custom-first opacity-20" size={150} />
-            </section>
-
-                {/* RT Leaderboard Banner */}
-            <section className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
-                <div className="flex justify-between items-center mb-3">
-                    <h3 className="font-bold text-xl">Status Peringkat RT</h3>
-                    <span className="text-sm font-medium bg-amber-100 text-amber-700 px-2 py-1 rounded-md">Rank #{0}</span>
-                    {/* <span className="text-sm font-medium bg-amber-100 text-amber-700 px-2 py-1 rounded-md">Rank #{profileData?.status_rt_rank?.userRt?.rank || 0}</span> */}
-                </div>
-                <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
-                    {/* <div 
-                    style={{ width: `${profileData?.status_rt_rank?.percentage}%`}}
-                    className={`bg-amber-400 h-full `}></div> */}
-                    <div 
-                    style={{ width: `100%`}}
-                    className={`bg-amber-400 h-full `}></div>
-                </div>
-                {/* <p className="text-sm text-slate-500 mt-2">{NumberFormater(profileData?.status_rt_rank?.gapPoints)} poin lagi untuk naik peringkat {profileData?.status_rt_rank?.upperRt?.rank || 0}!</p> */}
-                <p className="text-sm text-slate-500 mt-2">0 poin lagi untuk naik peringkat 0!</p>
             </section>
             
             {profileData ? 
@@ -343,11 +324,8 @@ const Dashboard = () => {
                                 onClick={(e) => handleUpdateProfiles(e)}
                                 className="w-full py-4 bg-custom-third text-white rounded-[1.5rem] font-bold shadow-lg shadow-custom-third/30 hover:bg-custom-second hover:shadow-custom-second/30 hover:scale-[1.01] transition-all flex items-center justify-center gap-3 active:scale-95"
                             >
-                                <Save size={20} /> Simpan Perubahan Identitas
+                                <Save size={20} /> Save Identity Changes
                             </button>
-                            <p className="text-center text-[10px] text-slate-400 font-medium mt-4 px-6">
-                                Pastikan pemilihan lokasi RT/RW sesuai agar poin dampak lingkungan Anda terakumulasi dengan benar di sistem leaderboard [2, 3].
-                            </p>
                         </div>
                     </fieldset>
                 </form>

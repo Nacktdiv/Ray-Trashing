@@ -108,9 +108,9 @@ export default function ScannerModal ({ isOpen, onClose, mode }) {
 
       <div className="z-50 bg-white w-full max-w-2xl max-h-screen rounded-md shadow-md overflow-hidden flex flex-col">
         
-        <div className="p-3 md:p-6 border-b border-slate-100 flex justify-between items-center bg-emerald-50/50">
+        <div className="p-3 md:p-6 border-b border-slate-100 flex justify-between items-center bg-custom-first/30">
           <div className="flex items-center gap-2">
-            <div className="p-2 bg-emerald-600 rounded-lg text-white">
+            <div className="p-2 bg-custom-second rounded-lg text-white">
               <Sparkles size={20} />
             </div>
             <h2 className="text-xl font-bold text-slate-800">AI Waste Scanner</h2>
@@ -126,11 +126,11 @@ export default function ScannerModal ({ isOpen, onClose, mode }) {
             <div className="space-y-6">
               {!image ? (
                 <>
-                  <div className="border-2 border-dashed border-emerald-200 rounded-3xl p-10 flex flex-col items-center justify-center bg-emerald-50/30 gap-4">
+                  <div className="border-2 border-dashed border-custom-first rounded-3xl p-10 flex flex-col items-center justify-center bg-custom-first/10 gap-4">
                     <div className="flex gap-4">
                       <label className="flex flex-col items-center justify-center p-4 w-32 h-32 bg-white border border-slate-200 rounded-2xl cursor-pointer hover:border-emerald-500 hover:text-emerald-600 transition-all shadow-sm">
                         <Camera size={32} className="mb-2" />
-                        <span className="text-sm font-bold">Ambil Foto</span>
+                        <span className="text-sm font-bold">Take Photo</span>
                         <input type="file" accept="image/*" capture="environment" className="hidden" onChange={handleImageUpload} />
                       </label>
                       <label className="flex flex-col items-center justify-center p-4 w-32 h-32 bg-white border border-slate-200 rounded-2xl cursor-pointer hover:border-emerald-500 hover:text-emerald-600 transition-all shadow-sm">
@@ -140,7 +140,7 @@ export default function ScannerModal ({ isOpen, onClose, mode }) {
                       </label>
                     </div>
                     <p className=" text-slate-500 font-medium text-center px-6">
-                      Scan sampah plastik, kertas, atau logam Anda untuk mulai berkreasi.
+                      Scan plastic, paper, or metal waste to get AI-generated project ideas and CO2 reduction estimates!
                     </p>
                   </div>
                   {mode == 'Community' 
@@ -179,19 +179,19 @@ export default function ScannerModal ({ isOpen, onClose, mode }) {
                 disabled={!image || isAnalyzing}
                 className={`w-full py-4 rounded-2xl font-bold flex items-center justify-center gap-2 transition-all shadow-lg ${
                   image && !isAnalyzing 
-                  ? 'bg-emerald-600 text-white shadow-emerald-200 hover:bg-emerald-700' 
+                  ? 'bg-custom-second text-white shadow-emerald-200 hover:bg-custom-third' 
                   : 'bg-slate-100 text-slate-400 cursor-not-allowed'
                 }`}
               >
                 {isAnalyzing ? (
                   <>
                     <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                    Menganalisis Bahan...
+                    Analyzing Material...
                   </>
                 ) : (
                   <>
                     <Zap size={20} />
-                    Mulai Analisis AI
+                    Start Analyze
                   </>
                 )}
               </button>
@@ -200,7 +200,7 @@ export default function ScannerModal ({ isOpen, onClose, mode }) {
             <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4">
               <div className="bg-blue-50 border border-blue-100 p-4 rounded-2xl flex items-center gap-3">
                 <CheckCircle2 className="text-blue-600" />
-                <p className="text-sm font-medium text-blue-800">Bahan terdeteksi: <span className="font-bold">{result.bahan_terdeteksi}</span></p>
+                <p className="text-sm font-medium text-blue-800">Material Detected: <span className="font-bold">{result.bahan_terdeteksi}</span></p>
               </div>
               
               <div className="grid md:grid-cols-3 gap-4">
@@ -245,11 +245,11 @@ export default function ScannerModal ({ isOpen, onClose, mode }) {
                         disabled={!selectedProject?.title}
                         className={`w-full py-4 rounded-2xl font-bold transition-all shadow-xl ${
                           selectedProject?.title 
-                          ? 'bg-emerald-600 text-white shadow-emerald-200 hover:scale-[1.02]' 
+                          ? 'bg-custom-second text-white shadow-custom-second/30 hover:scale-[1.02]' 
                           : 'bg-slate-100 text-slate-400 cursor-not-allowed'
                         }`}
                       >
-                        Buat Project: {selectedProject?.title || "Pilih satu ide"}
+                        Create Project: {selectedProject?.title || "Select an idea"}
                       </button>
                   </div>
                 )}

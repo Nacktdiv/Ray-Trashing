@@ -1,5 +1,4 @@
 import { createClient } from "@/app/lib/supabase";
-import { success } from "zod";
 
 const GetCarbonFootprint = async (idUser) => {
     const supabase = createClient()

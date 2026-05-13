@@ -1,6 +1,7 @@
 'use server'
 
-import { google } from '@ai-sdk/google';
+import { google } from '@ai-sdk/google'
+import { GoogleGenerativeAI } from "@google/generative-ai"
 import { generateText } from 'ai';
 
 async function AnalyzeImage (base64Image) {
@@ -27,8 +28,30 @@ async function AnalyzeImage (base64Image) {
 
 //     return ({success: true, data: datatest})
 
+    // async function listModels() {
+    // const key = process.env.GOOGLE_GENERATIVE_AI_API_KEY || process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
+    //     try {
+    //         const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${key}`);
+    //         const data = await response.json();
+            
+    //         console.log("--- DEBUG DATA DARI GOOGLE ---");
+    //         console.log(JSON.stringify(data, null, 2)); // Biar kelihatan struktur aslinya
+    //         console.log("------------------------------");
+
+    //         if (data.models) {
+    //             const available = data.models.map(m => m.name.replace('models/', ''));
+    //             console.log("Model tersedia:", available);
+    //         } else if (data.error) {
+    //             console.error("Pesan Error dari Google:", data.error.message);
+    //         }
+    //     } catch (err) {
+    //         console.error("Gagal total fetch:", err.message);
+    //     }
+    // }
+    // listModels()
+
     const {text} = await generateText({
-        model: google('gemma-3-27b-it'),
+        model: google('gemma-4-31b-it'),
         messages: [
             {
                 role:'user',

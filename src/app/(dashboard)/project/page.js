@@ -60,7 +60,7 @@ const MyProjectsPage = () => {
       {/* Header & Toggle */}
       <div className="bg-white px-6 pt-12 pb-6 shadow-sm sticky top-0 z-10 rounded-b-[2rem]">
         <h1 className="text-2xl font-extrabold text-custom-alter mb-6 flex items-center gap-2">
-          <LayoutGrid className="text-custom-third" /> Workshop Saya
+          <LayoutGrid className="text-custom-third" /> My Workplace
         </h1>
         
         <div className="flex bg-slate-100 p-1.5 rounded-2xl">
@@ -88,7 +88,7 @@ const MyProjectsPage = () => {
         <section>
           <div className="flex items-center gap-2 mb-4">
             <Clock size={18} className="text-amber-500" />
-            <h2 className="font-bold text-slate-700">Sedang Berjalan</h2>
+            <h2 className="font-bold text-slate-700">Ongoing</h2>
             <span className="bg-amber-100 text-amber-700 text-xs px-2 py-0.5 rounded-full font-bold">
               {currentProjects.ongoing.length}
             </span>
@@ -140,7 +140,7 @@ const MyProjectsPage = () => {
         <section>
           <div className="flex items-center gap-2 mb-4">
             <CheckCircle size={18} className="text-custom-alter" />
-            <h2 className="font-bold text-slate-700">Sudah Selesai</h2>
+            <h2 className="font-bold text-slate-700">Completed</h2>
           </div>
 
           <div className="grid gap-4">
@@ -152,7 +152,7 @@ const MyProjectsPage = () => {
                   </div>
                   <div>
                     <h3 className="font-bold text-sm text-slate-800">{project.title}</h3>
-                    <p className="text-[10px] text-slate-500 font-medium italic">Selesai pada {project.date}</p>
+                    <p className="text-[10px] text-slate-500 font-medium italic">Completed on {project.date}</p>
                   </div>
                 </div>
                 <div className="text-right">
@@ -172,7 +172,7 @@ const MyProjectsPage = () => {
             }} 
             className='w-full py-4 bg-custom-third shadow-xl shadow-custom-third/30 rounded-2xl text-lg text-white font-bold active:scale-95 transition-transform'
           >
-            + Buat Project Baru
+            + Create New Project
           </button>
       </div>
 

@@ -136,29 +136,29 @@ const ShowProjectTeam = ({ project, onClose }) => {
 
       <div className="z-10 bg-white w-full max-w-lg max-h-[75vh] md:max-h-[85vh] rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col animate-in fade-in zoom-in-95 duration-300">
         
-        <div className="p-6 bg-emerald-600 text-white relative">
+        <div className="p-6 bg-custom-second text-white relative">
           <button onClick={onClose} className="absolute top-6 right-6 p-2 bg-white/10 hover:bg-white/20 rounded-full transition-colors">
             <X size={20} />
           </button>
           <div className="flex justify-between items-start mb-4">
             <div className="p-2 bg-white/20 rounded-xl"><ClipboardList size={24} /></div>
             <div className="flex flex-col items-end mr-10">
-              <span className="text-[10px] font-black uppercase tracking-widest bg-white/20 px-2 py-1 rounded-md">{data.type} Project</span>
-              <div className="flex items-center gap-1 mt-1 text-emerald-100 font-bold text-sm"><Trophy size={14} /> {data.points_earned} Pts</div>
+              <span className="text-[10px] font-black uppercase tracking-widest bg-white/20 px-2 py-1 rounded-md">{data.type}Project</span>
+              <div className="flex items-center gap-1 mt-1 text-custom-first font-bold text-sm"><Trophy size={14} /> {data.points_earned} Pts</div>
             </div>
           </div>
           <h2 className="text-2xl font-black leading-tight mb-1 pr-8">{data.title}</h2>
-          <p className="text-emerald-100 text-xs flex items-center gap-1"><Package size={12} /> {data.material} • {data.difficulty}</p>
+          <p className="text-custom-first text-xs flex items-center gap-1"><Package size={12} /> {data.material} • {data.difficulty}</p>
         </div>
 
         <div className="flex-1 overflow-y-auto p-6 space-y-6">
           <div className="space-y-2">
             <div className="flex justify-between items-end">
-              <span className="text-sm font-bold text-slate-700">Progress Tim</span>
-              <span className="text-xl font-black text-emerald-600">{progressPercentage}%</span>
+              <span className="text-sm font-bold text-slate-700">Team Progress</span>
+              <span className="text-xl font-black text-custom-alter">{progressPercentage}%</span>
             </div>
             <div className="w-full h-3 bg-slate-100 rounded-full overflow-hidden">
-              <div className="h-full bg-emerald-500 transition-all duration-1000 ease-out" style={{ width: `${progressPercentage}%` }}></div>
+              <div className="h-full bg-custom-third transition-all duration-1000 ease-out" style={{ width: `${progressPercentage}%` }}></div>
             </div>
           </div>
 
@@ -174,7 +174,7 @@ const ShowProjectTeam = ({ project, onClose }) => {
 
           <div className="space-y-4">
             <div className="flex justify-between items-center">
-              <h4 className="font-black text-slate-800 text-xs uppercase tracking-wider">Daftar Kontributor</h4>
+              <h4 className="font-black text-slate-800 text-xs uppercase tracking-wider">Contributors</h4>
               {isLeader && (
                 <div className="flex bg-slate-100 p-1 rounded-xl">
                   <button className={`p-1.5 rounded-lg ${!isEdit ? 'bg-white shadow-sm text-blue-600' : 'text-slate-400'}`} onClick={() => setIsEdit(false)}><Users size={18}/></button>
@@ -194,15 +194,15 @@ const ShowProjectTeam = ({ project, onClose }) => {
                       <div>
                         <div className="flex items-center gap-1">
                           <p className="font-bold text-slate-800 text-sm">{member.name}</p>
-                          {member.isMe && <span className="text-[9px] bg-emerald-100 text-emerald-700 px-1.5 py-0.5 rounded-md font-bold">Anda</span>}
+                          {member.isMe && <span className="text-[9px] bg-custom-second text-custom-alter px-1.5 py-0.5 rounded-md font-bold">You</span>}
                         </div>
                         <p className="text-[10px] text-slate-400 font-bold uppercase">{member.role}</p>
                       </div>
                     </div>
                     {isEdit && isLeader ? (
-                      <button onClick={handleSubmitTask} disabled={isLoading} className="p-2 bg-emerald-500 text-white rounded-lg disabled:opacity-50"><GoalIcon size={16} /></button>
+                      <button onClick={handleSubmitTask} disabled={isLoading} className="p-2 bg-custom-second text-white rounded-lg disabled:opacity-50"><GoalIcon size={16} /></button>
                     ) : (
-                      <span className={`text-[9px] font-black px-2 py-1 rounded-lg ${member.is_completed ? 'bg-emerald-100 text-emerald-600' : 'bg-amber-50 text-amber-600'}`}>{member.is_completed ? 'DONE' : 'PENDING'}</span>
+                      <span className={`text-[9px] font-black px-2 py-1 rounded-lg ${member.is_completed ? 'bg-custom-second text-custom-alter' : 'bg-amber-50 text-amber-600'}`}>{member.is_completed ? 'DONE' : 'PENDING'}</span>
                     )}
                   </div>
                   <div className="mt-2 pl-12">
@@ -220,7 +220,7 @@ const ShowProjectTeam = ({ project, onClose }) => {
           </div>
 
           <div className="bg-slate-50 p-4 rounded-[2rem] border-2 border-dashed border-slate-200 space-y-3">
-            <h4 className="font-black text-slate-800 text-[10px] uppercase tracking-widest text-center">Validasi Bukti Proyek</h4>
+            <h4 className="font-black text-slate-800 text-[10px] uppercase tracking-widest text-center">Project Evidence Validation </h4>
             <div className="flex flex-col items-center gap-3">
               {selectedImage ? (
                 <div className="relative w-full aspect-video rounded-2xl overflow-hidden group">
@@ -230,7 +230,7 @@ const ShowProjectTeam = ({ project, onClose }) => {
               ) : (
                 <label className="w-full py-8 border-2 border-dashed border-slate-300 rounded-2xl flex flex-col items-center justify-center gap-2 cursor-pointer hover:bg-white transition-colors">
                   <Camera className="text-slate-400" size={32} />
-                  <span className="text-[11px] font-bold text-slate-400">Klik untuk upload foto proyek</span>
+                  <span className="text-[11px] font-bold text-slate-400">Click to upload project photo</span>
                   <input type="file" accept="image/*" className="hidden" onChange={handleImageChange} />
                 </label>
               )}
@@ -239,7 +239,7 @@ const ShowProjectTeam = ({ project, onClose }) => {
                 disabled={!selectedImage || isValidating}
                 className={`w-full py-3 rounded-xl font-black text-xs uppercase tracking-widest flex items-center justify-center gap-2 transition-all ${selectedImage && !isValidating ? 'bg-emerald-500 text-white shadow-lg active:scale-95' : 'bg-slate-200 text-slate-400 cursor-not-allowed'}`}
               >
-                {isValidating ? <><Loader2 size={16} className="animate-spin" /> Menganalisis...</> : <><CheckCircle2 size={16} /> Kirim Validation</>}
+                {isValidating ? <><Loader2 size={16} className="animate-spin" /> Analyzing...</> : <><CheckCircle2 size={16} /> Submit Validation</>}
               </button>
             </div>
           </div>
@@ -247,7 +247,7 @@ const ShowProjectTeam = ({ project, onClose }) => {
 
         <div className="p-6 bg-white border-t border-slate-50">
           <button onClick={handleNavigateToChat} className="w-full py-4 rounded-2xl font-black bg-slate-900 text-white shadow-xl flex items-center justify-center gap-3 hover:bg-slate-800 transition-all active:scale-[0.98]">
-            <MessageCircle size={20} /> Masuk ke Ruang Chat <ChevronRight size={18} />
+            <MessageCircle size={20} /> Enter Chat Room <ChevronRight size={18} />
           </button>
         </div>
       </div>

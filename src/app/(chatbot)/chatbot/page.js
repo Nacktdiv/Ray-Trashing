@@ -115,7 +115,7 @@ const AITutorChat = () => {
             <h2 className="font-bold text-slate-800 leading-tight text-sm md:text-base">{projectName}</h2>
             <div className="flex items-center gap-1">
               <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
-              <p className="text-[10px] md:text-xs text-slate-400 font-medium uppercase tracking-wider italic">AI Tutor Aktif</p>
+              <p className="text-[10px] md:text-xs text-slate-400 font-medium uppercase tracking-wider italic">AI Tutor Active</p>
             </div>
           </div>
         </div>
@@ -197,7 +197,7 @@ const AITutorChat = () => {
           </button>
         </div>
         <p className="text-center text-[10px] text-slate-400 mt-3 font-medium">
-          Gemini AI dapat membuat kesalahan. Pastikan untuk selalu mengutamakan keselamatan saat berkarya.
+          Ray Trashing is a free AI tutor platform. Please avoid sharing sensitive information.
         </p>
       </div>
     </div>
