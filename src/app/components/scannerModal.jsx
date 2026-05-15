@@ -36,18 +36,25 @@ export default function ScannerModal ({ isOpen, onClose, mode }) {
   }, [isOpen]);
 
   const handleAnalyze = async () => {
+    setIsAnalyzing(true);
+    toast.loading("Please Wait, the fermentation process is still ongoing")
 
-    const base64Content = image.split(',')[1]
+    try {
+      const base64Content = image.split(',')[1];
+      const res = await AnalyzeImage(base64Content);
 
-    const res = await AnalyzeImage(base64Content)
-    if (res.success) {
-      setResult(res.data)
-      setShowResults(true)
-    } else {
-      toast.error("Gagal analisis gambar sampah: ", res.message);
+      if (res.success) {
+        setResult(res.data);
+        setShowResults(true);
+      } else {
+        toast.error("Gagal analisis gambar sampah: " + res.message);
+      }
+    } catch (error) {
+      toast.error("Terjadi kesalahan saat menghubungi AI: " + error);
+    } finally {
+      setIsAnalyzing(false);
     }
-    setIsAnalyzing(false)
-  }
+  };
 
   const handleImageUpload = async (e) => {
     const file = e.target.files[0]

@@ -12,7 +12,6 @@ import GetDistrict from '@/app/services/dashboard/getDistrict';
 import useDebounce from '@/app/components/shared/debouncedFunction';
 import UpdateProfiles from '@/app/services/dashboard/updateProfiles';
 import GetCarbonFootprint from '@/app/services/dashboard/getCarbonFootprint';
-import GetLeaderboard from '@/app/services/leaderboard/getLeaderboard';
 
 const Dashboard = () => {
     const { profile } = useUser();
