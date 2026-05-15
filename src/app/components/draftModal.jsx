@@ -30,9 +30,9 @@ const DraftModal = ({ isOpen, onClose, project, setProjects }) => {
     const res = await PublishedProduct(project.id)
     if (res.success){
       await setProjects({type: "PUBLISHED", data: res.data})
-      toast.success('Berhasil Published Draft: ',res.message)
+      toast.success(`Berhasil Published Draft: ${res.message}`)
     } else {
-      toast.error('Gagal Published Draft: ', res.message)
+      toast.error(`Gagal Published Draft: ${res.message}`)
     }
   }
 

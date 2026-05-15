@@ -1,5 +1,4 @@
 import { createClient } from "@/app/lib/supabase";
-import { id } from "zod/v4/locales";
 
 const GetProducts = async (timestamp = null) => {
     const supabase = createClient()
