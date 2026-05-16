@@ -24,15 +24,12 @@ const ProductDetailModal = ({ isOpen, onClose, product}) => {
 
   const handleAddClick = async () => {
     const res = await CreateCart(amount, profile.id, product.product_id)
-    console.log(res)
     if(res.success) {
       toast.success("Success Creating Carts: ", res.message)
     } else {
       toast.error("Error Creating Carts: ", res.message)
     }
   };
-
-  console.log(product)
 
   return (
     // Tambahkan p-2 atau p-4 agar modal tidak mentok ke pinggir layar HP

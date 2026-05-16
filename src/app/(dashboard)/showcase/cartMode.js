@@ -97,7 +97,6 @@ export default function CartMode() {
   };
 
   const handleUpdateAmount = async (cartId, newAmount, type) => {
-    console.log(newAmount)
     if(newAmount > 0) {
       const res = await UpdateCart(cartId, newAmount)
       if (res.success) {
@@ -110,6 +109,18 @@ export default function CartMode() {
       const res = await DeleteCart(cartId)
       if (res.success) {
         dispatch({ type : 'REMOVE', id: cartId });
+        toast.success(res.message)
+      } else {
+        toast.error(res.message)
+      }
+    }
+  }
+
+  const handleDeleteAfterCreateOrder = async () => {
+    for (let i = 0; i < cart.length; i++ ) {
+      const res = await DeleteCart(cart[i].id)
+      if (res.success) {
+        dispatch({ type : "REMOVE", id: cart[i].id });
         toast.success(res.message)
       } else {
         toast.error(res.message)
@@ -179,6 +190,7 @@ export default function CartMode() {
         onClose={() => setCheckoutOpen(false)}
         cartSelected={cartSelected}
         onMakeOrder={() => {
+          handleDeleteAfterCreateOrder()
           setCheckoutOpen(false);
           toast.success("Pesanan diproses!");
           setSelectedIds(new Set());

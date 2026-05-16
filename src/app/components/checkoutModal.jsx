@@ -90,6 +90,7 @@ export default function CheckoutModal({ isOpen, onClose, cartSelected, onMakeOrd
     
     if (res.success) {
         toast.success("Pesanan berhasil dibuat untuk semua toko!");
+        console.log('data hasil ', res.data)
         onMakeOrder();
     } else {
         toast.error("Gagal membuat pesanan: " + res.message);

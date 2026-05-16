@@ -7,6 +7,7 @@ import {
 import ExploreMode from './exploreMode';
 import MarketProfileMode from './marketProfileMode';
 import CartMode from './cartMode';
+import TransactionMode from './transactionMode';
 
 const GreenShowcaseV2 = () => {
 
@@ -129,7 +130,7 @@ const GreenShowcaseV2 = () => {
         {
           'explore': <ExploreMode />,
           'profile': <MarketProfileMode />,
-          'transaction': <div>Transaction Mode - Coming Soon!</div>,
+          'transaction': <TransactionMode/>,
           'cart': <CartMode />
         }[viewMode] || <ExploreMode />
       }

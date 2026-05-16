@@ -3,25 +3,25 @@ import { useState, useEffect } from "react";
 
 export default function MetodeStep({ onBack, onNext, orderData, setOrderData }) {
     const options = [
-        { key: "VA", label: "Virtual Account" },
-        { key: "QR", label: "QRIS" },
-        { key: "EWALLET", label: "E-Wallet" },
-        { key: "COD", label: "COD (demo)" },
+        { key: "bank_transfer", label: "Bank_Transfer" },
+        { key: "other_qris", label: "QRIS" },
+        { key: "gopay", label: "Gopay" },
+        { key: "indomaret", label: "Indomaret" },
     ];
 
-    const [paymentMethod, setPaymentMethod] = useState("VA");
+    const [paymentMethod, setPaymentMethod] = useState("bank_transfer");
 
     useEffect(() => {
         if (!orderData) return 
 
-        setPaymentMethod(orderData?.[0].payment_method || "VA")
+        setPaymentMethod(orderData.payment_method || 'bank_transfer')
     }, [orderData])
 
     const handleSave = () => {
         setOrderData((prev) => {
             return prev.map((item, index) => ({
                 ...item,
-                payment_method : paymentMethod
+                payment_method : paymentMethod,
             }))   
         })
     }
