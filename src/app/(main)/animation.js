@@ -175,7 +175,7 @@ function AnimSteps(Ref, cardsData) {
         let tl = gsap.timeline({
             scrollTrigger: {
             trigger: Ref.current,
-            markers:true,
+            // markers:true,
             start: 'top 50%',
             end: 'bottom 50%',
             toggleActions: 'play reverse play reverse',
