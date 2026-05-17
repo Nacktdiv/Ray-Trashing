@@ -16,8 +16,22 @@ const bricolage = Bricolage_Grotesque({
 });
 
 export const metadata = {
-  title: "Nama Aplikasi Kamu",
-  description: "Deskripsi aplikasi kamu",
+  title: "Ray Trashing - Waste to Worth with Gemini AI",
+  description: "Solusi cerdas kelola sampah di ujung jari. Dapatkan ide upcycling dari AI, pantau reduksi emisi CO2 kamu, dan jual hasil karyamu di marketplace kami.",
+  openGraph: {
+    title: "Ray Trashing",
+    description: "Inovasi AI untuk pengelolaan sampah yang lebih cerdas.",
+    url: "https://ray-trashing.vercel.app",
+    images: [
+      {
+        url: "/logos.png", 
+        width: 1200,
+        height: 630,
+      },
+    ],
+    locale: "id_ID",
+    type: "website",
+  },
 };
 
 export default function RootLayout({ children }) {
