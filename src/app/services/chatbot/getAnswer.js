@@ -7,6 +7,7 @@ const MessageSchema = z.object({
     id: z.int(),
     role: z.enum(["user", "assistant", "system"]),
     content: z.string(),
+    image: z.string().optional().nullable(), 
 });
 
 const ParseTextOutput = async (str) => {
@@ -27,15 +28,28 @@ const ParseTextOutput = async (str) => {
 const GetAnswer = async (messages) => {
         const validatedMessages = z.array(MessageSchema).parse(messages);
 
-        const lastMessage = validatedMessages[validatedMessages.length - 1]
+        const systemInstruction = `\n\n[SISTEM: Jawab WAJIB format JSON murni sesuai skema: {"answer": "...", "summary_so_far": "...", "suggested_action": "..."}.]`;
 
-        const formattedMessages = [
-            ...validatedMessages.slice(0, -1),
-            {
-                ...lastMessage,
-                content: `${lastMessage.content}\n\n[SISTEM: Jawab WAJIB format JSON murni sesuai skema: {"answer": "...", "summary_so_far": "...", "suggested_action": "..."}.]`
+        const formattedMessages = validatedMessages.map((msg, index) => {
+            const isLastMessage = index === validatedMessages.length - 1;
+            const textContent = isLastMessage ? `${msg.content}${systemInstruction}` : msg.content;
+
+            if (msg.image) {
+                const cleanBase64 = msg.image.replace(/^data:image\/\w+;base64,/, "");
+                return {
+                    role: msg.role,
+                    content: [
+                        { type: 'text', text: textContent },
+                        { type: 'image', image: cleanBase64}
+                    ]
+                };
             }
-        ]
+
+            return {
+                role: msg.role,
+                content: textContent
+            };
+        });
 
         const {text} = await generateText({
             model: google('gemma-4-31b-it'),
@@ -65,8 +79,6 @@ const GetAnswer = async (messages) => {
         
         const parsedRes = await ParseTextOutput(text)
 
-        console.log(parsedRes.answer)
-
         if (parsedRes && parsedRes.answer) {
             return ({ success: true, data: parsedRes });
         } 
@@ -74,7 +86,7 @@ const GetAnswer = async (messages) => {
         return {
             success: true,
             data: {
-            answer: text, // Masukkan seluruh teks sebagai jawaban
+            answer: text,
             summary_so_far: "Melanjutkan diskusi mengenai proyek...",
             suggested_action: "Model memberikan feedback berupa string langsung"
             }

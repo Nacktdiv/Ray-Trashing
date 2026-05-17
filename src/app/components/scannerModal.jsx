@@ -13,6 +13,7 @@ export default function ScannerModal ({ isOpen, onClose, mode }) {
   const {profile} = useUser()
 
   const [image, setImage] = useState(null);
+  const [description, setDescription] = useState("")
   const [result, setResult]  = useState(null)
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [showResults, setShowResults] = useState(false);
@@ -41,7 +42,7 @@ export default function ScannerModal ({ isOpen, onClose, mode }) {
 
     try {
       const base64Content = image.split(',')[1];
-      const res = await AnalyzeImage(base64Content);
+      const res = await AnalyzeImage(base64Content, description);
 
       if (res.success) {
         setResult(res.data);
@@ -78,6 +79,7 @@ export default function ScannerModal ({ isOpen, onClose, mode }) {
     setImage(null)
     setShowResults(false)
     onClose()
+    setDescription("");
   }
 
   const handleJoinProject = async (e) => {
@@ -146,7 +148,7 @@ export default function ScannerModal ({ isOpen, onClose, mode }) {
                         <input type="file" accept="image/*" className="hidden" onChange={handleImageUpload} />
                       </label>
                     </div>
-                    <p className=" text-slate-500 font-medium text-center px-6">
+                    <p className="text-slate-500 font-medium text-center px-6">
                       Scan plastic, paper, or metal waste to get AI-generated project ideas and CO2 reduction estimates!
                     </p>
                   </div>
@@ -169,14 +171,27 @@ export default function ScannerModal ({ isOpen, onClose, mode }) {
                   : (<></>)}
                 </>
               ) : (
-                <div className="relative flex justify-center"> 
-                    <div className='w-full aspect-video flex justify-center items-center border-2 border-emerald-200 border-dashed'>
+                <div className="relative flex flex-col justify-center"> 
+                    <div className='relative w-full aspect-video flex justify-center items-center border-2 border-emerald-200 border-dashed'>
                         <img src={image} alt="globe" className=' w-full h-full object-fit'/>
+                        <div className='absolute inset-0 flex justify-center items-center'>
+                          <button onClick={() => setImage(null)}>
+                            <Trash2 size={32} className='text-custom-third'></Trash2>
+                          </button>
+                        </div>
                     </div>
-                    <div className='absolute inset-0 flex justify-center items-center'>
-                      <button onClick={() => setImage(null)}>
-                        <Trash2 size={32} className='text-emerald-200'></Trash2>
-                      </button>
+                  
+                    <div className="w-full max-w-md mt-2 space-y-1.5 text-left">
+                      <label className="text-xs font-bold text-slate-600 uppercase tracking-wider block">
+                        Description
+                      </label>
+                      <textarea
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                        placeholder="Contoh: Berat sekitar 2 kg, jumlah 5 botol besar, dll..."
+                        rows={2}
+                        className="w-full px-4 py-3 text-sm bg-white border border-slate-200 rounded-2xl focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none transition-all resize-none text-slate-700 shadow-sm"
+                      />
                     </div>
                 </div>
               )}
@@ -204,7 +219,7 @@ export default function ScannerModal ({ isOpen, onClose, mode }) {
               </button>
             </div>
           ) : (
-            <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4">
+            <div className="space-y-4 md:space-y-6 animate-in fade-in slide-in-from-bottom-4">
               <div className="bg-blue-50 border border-blue-100 p-4 rounded-2xl flex items-center gap-3">
                 <CheckCircle2 className="text-blue-600" />
                 <p className="text-sm font-medium text-blue-800">Material Detected: <span className="font-bold">{result.bahan_terdeteksi}</span></p>
@@ -212,9 +227,9 @@ export default function ScannerModal ({ isOpen, onClose, mode }) {
               
               <div className="grid md:grid-cols-3 gap-4">
                 {Object.entries(result).map(([level, items]) => {
-                  if (level != "bahan_terdeteksi"){
+                  if (level != "bahan_terdeteksi" && level != "estimasi_berat_kg" && level != "emisi_co2_dicegah_kg"){
                     return (
-                      <div key={level} className="space-y-4 md:space-y-6 min-w-0 md:min-w-full">
+                      <div key={level} className="space-y-2 md:space-y-6 min-w-0 md:min-w-full">
                         <h3 className={`text-xs font-black uppercase tracking-widest px-2 ${
                           level === 'mudah' ? 'text-emerald-600' : level === 'sedang' ? 'text-amber-600' : 'text-red-600'
                         }`}>
@@ -228,7 +243,7 @@ export default function ScannerModal ({ isOpen, onClose, mode }) {
                                 <button
                                 key={item}
                                 onClick={() => setSelectedProject({...selectedProject, title:item, difficulty: level, material_category:result?.bahan_terdeteksi})}
-                                  className={`whitespace-nowrap md:whitespace-normal md:w-full text-left p-3 rounded-xl border text-sm font-medium transition-all ${
+                                  className={`whitespace-nowrap md:whitespace-normal md:w-full text-left p-3 rounded-xl border text-xs md:text-sm font-medium transition-all ${
                                     selectedProject?.title === item 
                                     ? 'border-emerald-600 bg-emerald-50 text-emerald-800 ring-2 ring-emerald-500/20' 
                                     : 'border-slate-100 bg-slate-50 hover:border-slate-300'
@@ -245,8 +260,12 @@ export default function ScannerModal ({ isOpen, onClose, mode }) {
                   }
                 })}
               </div>
+              <ul className='text-custom-alter'>
+                <li>Estimasi Berat (kg): {result.estimasi_berat_kg}</li>
+                <li>Estimasi CO2 Dicegah (kg): {result.emisi_co2_dicegah_kg}</li>
+              </ul>
               {showResults && (
-                <div className="px-4 pt-4 md:px-6 md:pt-6 border-t border-slate-100 bg-white">
+                <div className="md:px-6 md:pt-6 border-t border-slate-100 bg-white">
                     <button 
                         onClick={handleCreateProject}
                         disabled={!selectedProject?.title}

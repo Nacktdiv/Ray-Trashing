@@ -3,8 +3,9 @@
 import { google } from '@ai-sdk/google'
 import { GoogleGenerativeAI } from "@google/generative-ai"
 import { generateText } from 'ai';
+import { form } from 'framer-motion/client';
 
-async function AnalyzeImage (base64Image) {
+async function AnalyzeImage (base64Image, description) {
 //      const datatest = {
 //   "mudah": [
 //     "Dekorasi Dinding Estetik: Bunga atau bentuk geometris dari potongan dasar botol PET yang dicat atau diwarnai, dapat dijual sebagai hiasan dinding atau pajangan.",
@@ -50,6 +51,26 @@ async function AnalyzeImage (base64Image) {
     // }
     // listModels()
 
+    let formatedPrompt
+
+    if (description) {
+        formatedPrompt = [
+            {
+                type: 'text',
+                text: description
+            },
+            {
+                type: 'image',
+                image: base64Image
+            }
+        ]
+    } else {
+        formatedPrompt = [{
+            type: 'image',
+            image: base64Image
+        }]
+    }
+
     const {text} = await generateText({
         model: google('gemma-4-31b-it'),
         messages: [
@@ -60,7 +81,7 @@ async function AnalyzeImage (base64Image) {
                         type: 'text', 
                         text: `Tugas: Analisis sampah dalam gambar ini secara mendalam. 
                                 1. Identifikasi jenis bahan (Plastik, Kertas, Logam, atau lainnya).
-                                2. Estimasikan berat sampah tersebut dalam satuan kilogram.
+                                2. Estimasikan berat sampah tersebut dalam satuan kilogram (anda dapat menggunakan referensi description dari gambar tersebut untuk estimasi berat, jumlah dll..).
                                 3. Hitung estimasi emisi CO2 yang berhasil dicegah (dalam kg) jika bahan tersebut diolah kembali melalui ekonomi sirkular.
                                 4. Berikan masing-masing 3 ide proyek kreatif yang memiliki nilai jual tinggi untuk kategori Mudah, Sedang, dan Sulit
 
@@ -81,7 +102,7 @@ async function AnalyzeImage (base64Image) {
                                 "emisi_co2_dicegah_kg": number
                                 }`
                     },
-                    { type: 'image', image: base64Image }
+                    ...formatedPrompt
                 ]
             }
         ]

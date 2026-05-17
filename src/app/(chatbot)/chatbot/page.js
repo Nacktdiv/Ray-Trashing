@@ -13,10 +13,12 @@ import {
   Sparkles,
   User,
   Loader2,
+  X, 
 } from "lucide-react";
 import GetChatbot from "@/app/services/chatbot/getChatbot";
 import GetAnswer from "@/app/services/chatbot/getAnswer";
 import SaveChatbot from "@/app/services/chatbot/saveChatbot";
+import CompressImage from "@/app/components/shared/compressImage";
 
 const AITutorChat = () => {
   const searchParams = useSearchParams();
@@ -26,7 +28,8 @@ const AITutorChat = () => {
   
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState("");
-  const [isTyping, setIsTyping] = useState(false); // State untuk loading
+  const [imageValue, setImageValue] = useState(null); 
+  const [isTyping, setIsTyping] = useState(false);
   const bottomRef = useRef(null);
 
   const GetHistory = async () => {
@@ -53,20 +56,57 @@ const AITutorChat = () => {
     GetHistory();
   }, [projectName]);
 
-  const handleGeminiChat = async () => {
-    if (!inputValue.trim() || isTyping) return;
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
 
-    const newQuestion = {
-      id: Date.now(), // Gunakan timestamp agar ID unik
+    if (file) {
+      try {
+        const compressedBase64 = await CompressImage(file);
+        setImageValue(compressedBase64);
+        localStorage.setItem('temp_image_chat', compressedBase64);
+      } catch (error) {
+        toast.error("Gagal kompres dan menyimpan gambar");
+      }
+    }
+    // Reset file input value agar user bisa upload file yang sama jika mau
+    e.target.value = "";
+  };
+
+  // Fungsi untuk membatalkan/menghapus gambar preview yang siap dikirim
+  const handleRemovePreviewImage = () => {
+    setImageValue(null);
+    localStorage.removeItem('temp_image_chat');
+  };
+
+  useEffect(() => {
+    const savedImage = localStorage.getItem('temp_image_chat');
+    if (savedImage) {
+      setImageValue(savedImage);
+    }
+  }, []);
+
+  const handleGeminiChat = async () => {
+    if ((!inputValue.trim() && !imageValue) || isTyping) return;
+
+    let newQuestion = {
+      id: Date.now(),
       role: "user",
       content: inputValue,
       time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
     };
 
+    if (imageValue) {
+      newQuestion.image = imageValue;
+    }
+
     const updatedMessages = [...messages, newQuestion];
     setMessages(updatedMessages);
     setInputValue("");
-    setIsTyping(true); // Aktifkan animasi loading
+    
+    setImageValue(null);
+    localStorage.removeItem('temp_image_chat');
+    
+    setIsTyping(true);
 
     try {
       const res = await GetAnswer(updatedMessages);
@@ -86,7 +126,6 @@ const AITutorChat = () => {
       const finalMessages = [...updatedMessages, newAnswer];
       setMessages(finalMessages);
 
-      // Simpan ke database
       const saveRes = await SaveChatbot(finalMessages, id, profile);
       if (!saveRes.success) {
         console.error("Gagal menyimpan history:", saveRes.message);
@@ -94,11 +133,10 @@ const AITutorChat = () => {
     } catch (error) {
       toast.error("Terjadi kesalahan pada server AI.");
     } finally {
-      setIsTyping(false); // Matikan animasi loading
+      setIsTyping(false);
     }
   };
 
-  // Auto scroll setiap kali ada pesan baru atau sedang mengetik
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, isTyping]);
@@ -145,12 +183,24 @@ const AITutorChat = () => {
 
               {/* Bubble */}
               <div className="space-y-1">
+                {/* 1. PREVIEW GAMBAR DI DALAM BUBBLE CHAT */}
+                {msg.image && (
+                  <div className={`mb-1 flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
+                    <div className="relative max-w-xs overflow-hidden rounded-2xl border border-slate-200 shadow-sm bg-white p-1">
+                      <img 
+                        src={msg.image} 
+                        alt="Uploaded file" 
+                        className="max-h-60 w-auto object-cover rounded-xl"
+                      />
+                    </div>
+                  </div>
+                )}
+
                 <div className={`p-4 rounded-2xl text-sm leading-relaxed shadow-sm markdown-content ${
                   msg.role === 'user' 
                   ? 'bg-emerald-600 text-white rounded-tr-none' 
                   : 'bg-white text-slate-700 rounded-tl-none border border-slate-100' 
                 }`}>
-                  {/* Prop className dihapus, styling dipindah ke pembungkus div di atas */}
                   <ReactMarkdown 
                     components={{
                       p: ({node, ...props}) => <p className="leading-relaxed mb-2 last:mb-0" {...props} />,
@@ -187,17 +237,39 @@ const AITutorChat = () => {
         <div ref={bottomRef} className="h-4"></div>
       </div>
 
-      {/* Multi-Input Area */}
-      <div className="p-4 bg-white border-t border-slate-100 pb-8 md:pb-4">
-        <div className="max-w-4xl mx-auto bg-slate-50 border border-slate-200 rounded-[2rem] p-2 flex items-end gap-2 focus-within:ring-2 focus-within:ring-emerald-500/20 transition-all shadow-inner">
+      {/* Input Area */}
+      <div className="p-4 bg-white border-t border-slate-100 pb-8 md:pb-4 flex flex-col gap-2">
+        
+        {/* 2. PREVIEW PANEL DI ATAS INPUT BOX (STANDBY SEBELUM DIKIRIM) */}
+        {imageValue && (
+          <div className="max-w-4xl mx-auto w-full px-4 animate-in fade-in slide-in-from-bottom-2 duration-200">
+            <div className="relative inline-block bg-slate-100 p-1.5 rounded-2xl border border-slate-200 shadow-sm">
+              <img 
+                src={imageValue} 
+                alt="Upload preview" 
+                className="h-20 w-20 object-cover rounded-xl"
+              />
+              <button
+                onClick={handleRemovePreviewImage}
+                className="absolute -top-1.5 -right-1.5 bg-rose-500 text-white p-1 rounded-full shadow-md hover:bg-rose-600 transition-colors"
+                title="Hapus gambar"
+              >
+                <X size={12} />
+              </button>
+            </div>
+          </div>
+        )}
+
+        <div className="max-w-4xl mx-auto w-full bg-slate-50 border border-slate-200 rounded-[2rem] p-2 flex items-end gap-2 focus-within:ring-2 focus-within:ring-emerald-500/20 transition-all shadow-inner">
           <div className="flex gap-1 pl-2 pb-2">
             <label className="p-2 text-slate-400 hover:text-emerald-600 cursor-pointer transition-colors">
               <ImageIcon size={22} />
-              <input type="file" accept="image/*" className="hidden" />
-            </label>
-            <label className="p-2 text-slate-400 hover:text-emerald-600 cursor-pointer transition-colors">
-              <Paperclip size={22} />
-              <input type="file" className="hidden" />
+              <input 
+                type="file"   
+                accept="image/*" 
+                className="hidden"
+                onChange={handleImageUpload} 
+              />
             </label>
           </div>
 
@@ -218,9 +290,10 @@ const AITutorChat = () => {
 
           <button
             onClick={handleGeminiChat}
-            disabled={!inputValue.trim() || isTyping}
+            // Tombol aktif jika teks terisi ATAU ada gambar yang siap dikirim
+            disabled={(!inputValue.trim() && !imageValue) || isTyping}
             className={`p-3 rounded-full transition-all ${
-              inputValue.trim() && !isTyping
+              (inputValue.trim() || imageValue) && !isTyping
                 ? "bg-emerald-600 text-white shadow-lg shadow-emerald-200 hover:scale-105 active:scale-95"
                 : "bg-slate-200 text-slate-400 cursor-not-allowed"
             }`}
@@ -228,7 +301,7 @@ const AITutorChat = () => {
             {isTyping ? <Loader2 size={20} className="animate-spin" /> : <Send size={20} />}
           </button>
         </div>
-        <p className="text-center text-[10px] text-slate-400 mt-3 font-medium">
+        <p className="text-center text-[10px] text-slate-400 mt-1 font-medium">
           Gemicraft AI Tutor can make mistakes. Check important info.
         </p>
       </div>
