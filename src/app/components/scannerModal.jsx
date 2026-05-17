@@ -115,7 +115,7 @@ export default function ScannerModal ({ isOpen, onClose, mode }) {
       
       <div className='bg-linear-to-r from-transparent to-transparent absolute inset-0 z-50 backdrop-blur-sm'></div>
 
-      <div className="z-50 bg-white w-full max-w-2xl max-h-screen rounded-md shadow-md overflow-hidden flex flex-col">
+      <div className="z-50 bg-white w-full max-w-2xl max-h-[80vh] rounded-md shadow-md overflow-hidden flex flex-col">
         
         <div className="p-3 md:p-6 border-b border-slate-100 flex justify-between items-center bg-custom-first/30">
           <div className="flex items-center gap-2">
@@ -172,7 +172,7 @@ export default function ScannerModal ({ isOpen, onClose, mode }) {
                 </>
               ) : (
                 <div className="relative flex flex-col justify-center"> 
-                    <div className='relative w-full aspect-video flex justify-center items-center border-2 border-emerald-200 border-dashed'>
+                    <div className='relative w-full aspect-video max-h-[35vh] md:max-h-full flex justify-center items-center border-2 border-emerald-200 border-dashed'>
                         <img src={image} alt="globe" className=' w-full h-full object-fit'/>
                         <div className='absolute inset-0 flex justify-center items-center'>
                           <button onClick={() => setImage(null)}>
