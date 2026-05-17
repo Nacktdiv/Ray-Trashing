@@ -3,7 +3,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Framework: Next.js](https://img.shields.io/badge/Framework-Next.js-black?logo=next.js)](https://nextjs.org/)
 [![Database: Supabase](https://img.shields.io/badge/Database-Supabase-blue?logo=supabase)](https://supabase.com/)
-[![AI: Gemma 27b](https://img.shields.io/badge/AI-Gemma_27b-orange?logo=google-gemini)](https://ai.google.dev/)
+[![AI: Gemma 4 31b it](https://img.shields.io/badge/AI-Gemma_27b-orange?logo=google-gemini)](https://ai.google.dev/)
 
 **Ray-Trashing** adalah platform inovasi berbasis website yang dirancang sebagai solusi digital komprehensif untuk mengubah paradigma masyarakat terhadap sampah dari material sisa menjadi sumber daya bernilai ekonomi tinggi. Melalui pendekatan ekonomi sirkular, platform ini menjembatani celah literasi pengelolaan sampah menggunakan teknologi **Artificial Intelligence (AI)** dan ekosistem **E-commerce** yang terintegrasi.
 
@@ -17,7 +17,7 @@ Ray-Trashing dibangun menggunakan fondasi teknologi modern untuk menjamin perfor
 *   **Fondasi Bahasa:** Ekosistem **Javascript-based** secara menyeluruh.
 *   **Frontend Framework:** **Next.js** untuk antarmuka yang responsif, cepat, dan ramah SEO .
 *   **Backend & Database:** **Supabase** (Backend-as-a-Service) untuk manajemen basis data pengguna, histori chat, dan produk e-commerce.
-*   **Artificial Intelligence:** **Gemini API** dengan model bahasa besar **Gemma 27b** yang telah melalui proses *fine-tuning* untuk menghasilkan respons chatbot yang akurat dan solutif.
+*   **Artificial Intelligence:** **Gemini API** dengan model bahasa besar **Gemma 31b it** yang telah melalui proses *fine-tuning* untuk menghasilkan respons chatbot yang akurat dan solutif.
 *   **Payment Gateway:** **Midtrans** untuk mendukung berbagai metode transaksi digital yang aman dalam ekosistem jual-beli produk daur ulang.
 
 ## ✨ Fitur Utama
