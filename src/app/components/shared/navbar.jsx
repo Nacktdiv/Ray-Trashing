@@ -67,7 +67,7 @@ export function Navbar() {
               <button className="px-5 py-2 font-semibold text-custom-alter bg-white hover:bg-custom-alter hover:text-white hover:scale-105 rounded-full transition">
                 <Link href="/auth?mode=login">
                   Login
-              </Link>
+                </Link>
             </button>
               <button className="px-5 py-2 font-semibold bg-custom-second text-white rounded-full shadow-md hover:bg-custom-alter hover:scale-105 transition">
                 <Link href="/auth?mode=register">
@@ -105,8 +105,16 @@ export function Navbar() {
                   ))}
                   <hr className="border-slate-100" />
                   <div className="flex flex-col gap-3">
-                      <button className="w-full py-3 text-center font-semibold text-custom-third bg-white hover:bg-custom-first/30 rounded-xl hover:scale-105 transition">Masuk</button>
-                      <button className="w-full py-3 text-center font-semibold text-white rounded-xl bg-custom-third hover:bg-custom-third/30 hover:scale-105 transition">Daftar</button>
+                      <button className="w-full py-3 text-center font-semibold text-custom-third bg-white hover:bg-custom-first/30 rounded-xl hover:scale-105 transition">
+                      <Link href="/auth?mode=login">
+                        Login
+                      </Link>
+                      </button>
+                      <button className="w-full py-3 text-center font-semibold text-white rounded-xl bg-custom-third hover:bg-custom-third/30 hover:scale-105 transition">
+                      <Link href="/auth?mode=register">
+                        Register
+                      </Link>
+                      </button>
                   </div>
               </div>
             )
